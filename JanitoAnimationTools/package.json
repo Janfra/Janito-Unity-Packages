@@ -1,0 +1,9 @@
+{
+  "name": "com.janito.animationtools",
+  "version": "1.0.0",
+  "displayName": "Janito Animation Tools",
+  "description": "Generic animation components and scriptable objects to modify and access Unity animations. Aims to expose additional Unity Events and information to the editor to create quick prototypes.",
+  "author": {
+    "name": "Janfranco H.M."
+  }
+}
