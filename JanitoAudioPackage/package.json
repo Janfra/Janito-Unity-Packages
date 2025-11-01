@@ -1,0 +1,9 @@
+{
+  "name": "com.janito.audiopackage",
+  "version": "1.0.0",
+  "displayName": "Janito Audio Package",
+  "description": "Generic audio components and scriptable objects to modify Unity Audio Source. Can help quickly implement common techniques such as pitch shifting.",
+  "author": {
+    "name": "Janfranco H.M."
+  }
+}
