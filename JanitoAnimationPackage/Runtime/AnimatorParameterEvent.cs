@@ -10,9 +10,9 @@ namespace Janito.Animations
 
         public abstract void ApplyEventValue(AnimatorModifierComponent modifierComponent);
 
+#if UNITY_EDITOR
         private void OnEnable()
         {
-#if UNITY_EDITOR
             if (Application.isPlaying)
             {
                 if (_parameter == null)
@@ -20,7 +20,7 @@ namespace Janito.Animations
                     Debug.LogWarning($"Animator Parameter is null on AnimatorParameterEvent ScriptableObject: {name}", this);
                 }
             }
-#endif
         }
+#endif
     }
 }

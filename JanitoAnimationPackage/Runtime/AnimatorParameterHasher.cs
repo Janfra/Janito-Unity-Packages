@@ -6,41 +6,21 @@ namespace Janito.Animations
     public class AnimatorParameterHasher : ScriptableObject
     {
         [SerializeField]
-        private string _parameterName;
+        private string _parameterName = string.Empty;
         [SerializeField]
         private AnimatorControllerParameterType _type;
 
-        public int ID => _id;
-        private int _id;
-        private bool _isInitialised = false;
-
-        private void OnEnable()
-        {
-            Initialise();
-        }
-
-        public void Initialise(bool isForced = false)
-        {
-            if (!_isInitialised || isForced)
-            {
-                if (_parameterName.Length > 0)
-                {
-                    _id = Animator.StringToHash(_parameterName);
-                }
-    #if UNITY_EDITOR
-                else if (Application.isPlaying)
-                {
-                    throw new System.NullReferenceException($"Parameter name for Animator is null or empty. Please set a value before usage for {name}");
-                }
-    #endif
-            }
-        }
+        [SerializeField]
+        private int? _id;
+        public int ID => GetID();
+        public bool IsValid => _id != null;
 
         public bool HasParameter(Animator animator)
         {
-            if (!_isInitialised)
+            if (!IsValid)
             {
-                Initialise();
+                Debug.LogError($"Animator parameter name is empty in AnimatorParameterHasher '{name}'.");
+                return false;
             }
 
             foreach (var parameter in animator.parameters)
@@ -56,6 +36,31 @@ namespace Janito.Animations
                 }
             }
             return false;
+        }
+
+        private int GetID()
+        {
+            if (_id is int id)
+            {
+                return id;
+            }
+            else
+            {
+                Debug.LogError($"Animator parameter name is empty in AnimatorParameterHasher '{name}'. Returning ID as -1.");
+                return -1;
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (_parameterName.Length > 0)
+            {
+                _id = Animator.StringToHash(_parameterName);
+            }
+            else
+            {
+                _id = null;
+            }
         }
     }
 }
