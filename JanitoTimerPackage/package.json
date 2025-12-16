@@ -1,5 +1,5 @@
 {
-  "name": "com.janito.timers",
+  "name": "com.janito.timerspackage",
   "version": "1.0.0",
   "displayName": "Janito Timers Package",
   "description": "Janito's version of git-amend improved timers package. It adds a Unity Player Loop for self-managed timers.",
