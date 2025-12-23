@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+### Added
+- Adds extension methods to the Unity animator to directly modify values on the animator using hashed parameters without requiring the modifier component.
+- Adds automatically fetching the animator component on the animator modifier component. 
+
 ## [1.0.1] - 2025-12-16
 ### Animator Parameter Hasher Update
 - Replaces the old process of updating the ID of the parameter name on enabling with a new process performed on 

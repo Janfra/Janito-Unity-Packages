@@ -39,5 +39,10 @@ namespace Janito.Animations
         {
             _animator.SetTrigger(parameter.ID);
         }
+
+        private void OnValidate()
+        {
+            _animator ??= GetComponent<Animator>();
+        }
     }
 }
