@@ -1,0 +1,20 @@
+{
+    "name": "Janito.EditorExtras.Editor",
+    "rootNamespace": "Janito.EditorExtras.Editor",
+    "references": [
+        "GUID:c668b7a00ffe56a498ddb1fc9f96f4e6",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:e3caa66287e2bf940b1046821593214b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
