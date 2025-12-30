@@ -17,7 +17,7 @@ namespace Janito.Animations
             {
                 if (_parameter == null)
                 {
-                    Debug.LogWarning($"Animator Parameter is null on AnimatorParameterEvent ScriptableObject: {name}", this);
+                    Debug.LogWarning($"Animator Parameter is null on {nameof(AnimatorParameterEvent)} ScriptableObject: {name}", this);
                 }
             }
         }
