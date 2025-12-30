@@ -20,6 +20,11 @@ namespace Janito.EditorExtras
                 throw new ArgumentException($"Type {baseType.Name} is not an abstract class.");
             }
 
+            if (typeof(UnityEngine.Object).IsAssignableFrom(baseType)) 
+            {
+                throw new ArgumentException($"Type {baseType.Name} must not inherit from Unity Object class.");
+            }
+
             BaseType = baseType;
         }
     }
