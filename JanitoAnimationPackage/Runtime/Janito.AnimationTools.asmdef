@@ -1,7 +1,9 @@
 {
     "name": "Janito.AnimationTools",
     "rootNamespace": "Janito.Animations",
-    "references": [],
+    "references": [
+        "GUID:e3caa66287e2bf940b1046821593214b"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -1,0 +1,25 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Testing/Editor/AnimatorValueExtractionWindow/AnimatorValueExtractionWindow.uss?fileID=7433441132597879392&amp;guid=a5a1e366ec045084aa61f684bec41257&amp;type=3#AnimatorValueExtractionWindow" />
+    <ui:VisualElement name="Header" class="header" style="flex-grow: 1; background-color: rgb(48, 48, 48); height: auto; width: 100%; max-height: none; border-top-width: 2px; border-left-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-color: rgba(0, 0, 0, 0.28); border-top-color: rgba(0, 0, 0, 0.28); border-right-color: rgba(0, 0, 0, 0.28); border-bottom-color: rgba(0, 0, 0, 0.28); top: auto; align-self: flex-start; align-items: center; justify-content: center; padding-top: 10px; padding-bottom: 10px; flex-direction: column;">
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+            <uie:ObjectField label="Animator Controller" tooltip="Animator controller to extract information to generate objects." type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" name="AnimatorField" />
+            <ui:Button text="Create Selected Objects" name="ConfirmButton" selectable="false" focusable="false" enabled="false" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-top: 5px;">
+            <ui:Label text="Creation Placement Path" enabled="false" name="PathLabel" tooltip="Path created objects will be placed inside." style="align-self: center; align-content: center; justify-content: center;" />
+            <ui:Button text="..." name="PathSelectionButton" tooltip="Select path to place created objects in." enabled="true" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="Display" style="flex-grow: 3; width: 100%;">
+        <ui:TabView name="TabView" reorderable="true" style="background-color: rgba(0, 0, 0, 0); visibility: visible; overflow: visible; display: flex; flex-grow: 1; align-self: auto; align-content: auto; align-items: stretch; padding-top: 0; margin-top: 0;">
+            <ui:Tab label="Parameters" closeable="false" name="ParameterTab" style="-unity-font-style: normal;">
+                <uie:Toolbar style="padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 0;">
+                    <uie:ToolbarSearchField placeholder-text="Search Parameter" name="ToolbarSearchField" tooltip="Shows only parameters with an exact match.&lt;br&gt;&lt;b&gt;Case insensitive.&lt;/b&gt;" />
+                    <uie:ToolbarButton text="Select All" name="ToolbarSelectAllButton" style="-unity-font-style: bold;" />
+                    <uie:ToolbarButton text="Unselect All" name="ToolbarUnselectAllButton" style="-unity-font-style: bold;" />
+                </uie:Toolbar>
+                <ui:GroupBox name="ParameterBox" style="flex-direction: column; flex-wrap: nowrap; justify-content: flex-start; align-items: flex-start; align-self: auto; -unity-text-align: upper-left; background-color: rgba(0, 0, 0, 0);" />
+            </ui:Tab>
+        </ui:TabView>
+    </ui:VisualElement>
+</ui:UXML>

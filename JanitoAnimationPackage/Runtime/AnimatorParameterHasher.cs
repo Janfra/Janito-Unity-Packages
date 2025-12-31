@@ -13,7 +13,17 @@ namespace Janito.Animations
         [SerializeField]
         private int? _id;
         public int ID => GetID();
+        public string ReadableParameterName => _parameterName;
         public bool IsValid => _id != null;
+
+        public void Initialise(string parameterName, AnimatorControllerParameterType type)
+        {
+            if (!string.IsNullOrEmpty(_parameterName)) return;
+
+            _parameterName = parameterName;
+            _type = type;
+            _id = Animator.StringToHash(_parameterName);
+        }
 
         public bool HasParameter(Animator animator)
         {

@@ -1,0 +1,20 @@
+.header {
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-start;
+    height: 10%;
+    background-color: rgb(0, 0, 0);
+    border-top-width: 9px;
+    border-left-width: 9px;
+    border-bottom-width: 9px;
+    border-right-width: 9px;
+    border-top-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}

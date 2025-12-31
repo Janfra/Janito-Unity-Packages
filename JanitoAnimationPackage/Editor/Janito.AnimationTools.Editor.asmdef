@@ -1,0 +1,21 @@
+{
+    "name": "Janito.AnimationTools.Editor",
+    "rootNamespace": "Janito.Animations.Editor",
+    "references": [
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:06c56d1cbbaacb64996fb1275edb483c",
+        "GUID:e3caa66287e2bf940b1046821593214b",
+        "GUID:6a9f378f43bb26b42832c395c76173bd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
