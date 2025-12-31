@@ -1,3 +1,14 @@
 {
-	"name": "Janito.EditorExtras"
+    "name": "Janito.EditorExtras",
+    "rootNamespace": "Janito.EditorExtras",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+### Added
+- **Validation Library**: A set of utility functions to validate references, throwing an exception on condition failure.
+
+### Changed
+- **Restructured Runtime Folder**: Created an attributes folder to contain all runtime available attributes, moving all existing attributes inside.
+
 ## [1.0.1]
 #### Array & List Support
 
