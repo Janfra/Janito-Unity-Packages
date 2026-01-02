@@ -18,3 +18,30 @@
     display: none;
     visibility: hidden;
 }
+
+.sectiontitle {
+    background-color: rgb(67, 67, 67);
+    justify-content: center;
+    align-self: flex-start;
+    align-content: center;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 1px;
+    -unity-font-style: normal;
+    font-size: 12px;
+    border-top-width: 0;
+    border-bottom-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 1px;
+    border-bottom-left-radius: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 0;
+    -unity-text-align: upper-left;
+    padding-left: 5px;
+    padding-right: 5px;
+}

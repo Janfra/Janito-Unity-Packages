@@ -19,7 +19,7 @@ namespace Janito.Animations.Editor
         private readonly ToolbarSearchField m_ToolbarSearchField;
         private readonly ToolbarButton m_ToolbarSelectButton;
         private readonly ToolbarButton m_ToolbarUnselectButton;
-        private readonly GroupBox m_ParameterBox;
+        private readonly ScrollView m_ParameterBox;
 
         private List<ParameterOptionHandler> m_ParameterHandlers = new();
         private List<ParameterOptionHandler> m_SelectedParameters = new();
@@ -29,7 +29,7 @@ namespace Janito.Animations.Editor
             ValidationLibrary.SetAndValidateReference(ref m_ToolbarSearchField, root.Q<ToolbarSearchField>(ToolbarSearchName));
             ValidationLibrary.SetAndValidateReference(ref m_ToolbarSelectButton, root.Q<ToolbarButton>(ToolbarSelectAllButton));
             ValidationLibrary.SetAndValidateReference(ref m_ToolbarUnselectButton, root.Q<ToolbarButton>(ToolbarUnselectAllButton));
-            ValidationLibrary.SetAndValidateReference(ref m_ParameterBox, root.Q<GroupBox>(ParameterBoxName));
+            ValidationLibrary.SetAndValidateReference(ref m_ParameterBox, root.Q<ScrollView>(ParameterBoxName));
             ValidationLibrary.SetAndValidateReference(ref m_ParameterAsset, parameterAsset);
 
             SetupEvents();

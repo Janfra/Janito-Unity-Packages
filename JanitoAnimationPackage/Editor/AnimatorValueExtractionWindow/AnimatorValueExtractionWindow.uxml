@@ -1,13 +1,13 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Testing/Editor/AnimatorValueExtractionWindow/AnimatorValueExtractionWindow.uss?fileID=7433441132597879392&amp;guid=a5a1e366ec045084aa61f684bec41257&amp;type=3#AnimatorValueExtractionWindow" />
-    <ui:VisualElement name="Header" class="header" style="flex-grow: 1; background-color: rgb(48, 48, 48); height: auto; width: 100%; max-height: none; border-top-width: 2px; border-left-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-color: rgba(0, 0, 0, 0.28); border-top-color: rgba(0, 0, 0, 0.28); border-right-color: rgba(0, 0, 0, 0.28); border-bottom-color: rgba(0, 0, 0, 0.28); top: auto; align-self: flex-start; align-items: center; justify-content: center; padding-top: 10px; padding-bottom: 10px; flex-direction: column;">
-        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
-            <uie:ObjectField label="Animator Controller" tooltip="Animator controller to extract information to generate objects." type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" name="AnimatorField" />
-            <ui:Button text="Create Selected Objects" name="ConfirmButton" selectable="false" focusable="false" enabled="false" />
+    <Style src="project://database/Packages/com.janito.animationpackage/Editor/AnimatorValueExtractionWindow/AnimatorValueExtractionWindow.uss?fileID=7433441132597879392&amp;guid=a5a1e366ec045084aa61f684bec41257&amp;type=3#AnimatorValueExtractionWindow" />
+    <ui:VisualElement name="Header" class="header" style="flex-grow: 1; background-color: rgb(48, 48, 48); height: auto; width: 100%; max-height: none; border-top-width: 2px; border-left-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-color: rgba(0, 0, 0, 0.28); border-top-color: rgba(0, 0, 0, 0.28); border-right-color: rgba(0, 0, 0, 0.28); border-bottom-color: rgba(0, 0, 0, 0.28); top: auto; padding-top: 10px; padding-bottom: 10px; flex-direction: column; overflow: hidden; min-height: 70px; align-items: center;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; overflow: hidden;">
+            <uie:ObjectField label="Animator Controller" tooltip="Animator controller to extract information to generate objects." type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" name="AnimatorField" style="align-self: auto; align-content: auto; justify-content: flex-start; align-items: center;" />
+            <ui:Button text="Create Selected Objects" name="ConfirmButton" selectable="false" focusable="false" enabled="false" style="align-content: center; align-self: center; justify-content: center;" />
         </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-top: 5px;">
-            <ui:Label text="Creation Placement Path" enabled="false" name="PathLabel" tooltip="Path created objects will be placed inside." style="align-self: center; align-content: center; justify-content: center;" />
-            <ui:Button text="..." name="PathSelectionButton" tooltip="Select path to place created objects in." enabled="true" />
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-top: 5px; overflow: hidden;">
+            <ui:Label text="Creation Placement Path" enabled="false" name="PathLabel" tooltip="Destination path of created objects" style="align-self: center; align-content: center; justify-content: center;" />
+            <ui:Button text="..." name="PathSelectionButton" tooltip="Opens selection of destination path for created objects" enabled="true" style="align-self: center;" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Display" style="flex-grow: 3; width: 100%;">
@@ -18,8 +18,20 @@
                     <uie:ToolbarButton text="Select All" name="ToolbarSelectAllButton" style="-unity-font-style: bold;" />
                     <uie:ToolbarButton text="Unselect All" name="ToolbarUnselectAllButton" style="-unity-font-style: bold;" />
                 </uie:Toolbar>
-                <ui:GroupBox name="ParameterBox" style="flex-direction: column; flex-wrap: nowrap; justify-content: flex-start; align-items: flex-start; align-self: auto; -unity-text-align: upper-left; background-color: rgba(0, 0, 0, 0);" />
+                <ui:VisualElement style="flex-grow: 1; overflow: hidden; flex-direction: row; min-height: 25px;">
+                    <ui:VisualElement class="sectiontitle" style="flex-grow: 0; padding-right: 0; padding-left: 0; width: 100px;">
+                        <ui:Label text="Create Hasher" tooltip="Select the parameters that will have an Animator Parameter Hasher created for" style="flex-grow: 1; width: auto; margin-right: 0; padding-right: 0; -unity-text-align: upper-center; padding-left: 0; margin-left: 0; white-space: nowrap;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="sectiontitle" style="flex-grow: 14; border-right-width: 0;">
+                        <ui:Label text="Parameter Name" tooltip="Name of the parameter found inside the selected animator controller" style="flex-grow: 1; white-space: nowrap;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="sectiontitle" style="flex-grow: 14; border-right-width: 0;">
+                        <ui:Label text="Parameter Type" tooltip="Type of the parameter found inside the selected animator controller" style="flex-grow: 1; -unity-text-align: upper-right; padding-right: 2px; white-space: nowrap; overflow: hidden;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:ScrollView enabled="true" name="ParameterBox" />
             </ui:Tab>
         </ui:TabView>
     </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1;" />
 </ui:UXML>

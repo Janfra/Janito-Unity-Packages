@@ -1,5 +1,6 @@
 using Janito.Animations.Editor;
 using Janito.EditorExtras;
+using Janito.EditorExtras.Editor;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.UIElements;
@@ -28,9 +29,12 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
     private Button m_PathSelectionButton;
 
     // Logic variables
+    [SerializeField]
     private AnimatorController m_AnimatorController;
+    [SerializeField]
+    private string m_DestinationPath = "Assets";
     private ParameterTabHandler m_ParameterTabHandler;
-    private string m_DestinationPath = string.Empty;
+    private SerializedObject m_SerializedAnimator;
 
     [MenuItem("Tools/Janito/AnimatorValueExtractionWindow")]
     public static void ShowWindow()
@@ -51,6 +55,7 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
         FetchReferences();
         SetupEvents();
         SetupTabs();
+        SetupReferences();
     }
 
     private void FetchReferences()
@@ -59,7 +64,7 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
         this.SetAndValidateReference(ref m_ConfirmButton, m_Root.Q<Button>(ConfirmButtonName));
         this.SetAndValidateReference(ref m_ParameterTab, m_Root.Q<Tab>(ParameterTabName));
         this.SetAndValidateReference(ref m_PathLabel, m_Root.Q<Label>(PathLabelName));
-        this.SetAndValidateReference(ref m_PathSelectionButton, m_Root.Q<Button>(PathSelectionButtonName)); 
+        this.SetAndValidateReference(ref m_PathSelectionButton, m_Root.Q<Button>(PathSelectionButtonName));
     }
 
     private void SetupTabs()
@@ -72,20 +77,25 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
         m_AnimatorField.RegisterValueChangedCallback(OnAnimatorSet);
         m_ConfirmButton.RegisterCallback<ClickEvent>(OnConfirm);
         m_PathSelectionButton.RegisterCallback<ClickEvent>(OnPathSelection);
+        m_Root.RegisterCallback<DetachFromPanelEvent>(OnDetached);
+    }
+
+    private void SetupReferences()
+    {
+        m_PathLabel.text = m_DestinationPath;
+        if (m_AnimatorController != null) 
+        {
+            m_AnimatorField.value = m_AnimatorController;
+            if (m_SerializedAnimator == null) SetSerializedAnimatorReference();
+        } 
     }
 
     private void OnPathSelection(ClickEvent evt)
     {
-        string path = EditorUtility.OpenFolderPanel("Select Destination", "Assets", string.Empty);
-
-        if (!string.IsNullOrEmpty(path)) 
+        if (PathLibrary.TryGetProjectPathFromUser(out string destinationPath))
         {
-            if (path.StartsWith(Application.dataPath))
-            {
-                path = "Assets" + path.Substring(Application.dataPath.Length);
-                m_PathLabel.text = path;
-                m_DestinationPath = path;
-            }
+            m_PathLabel.text = destinationPath;
+            m_DestinationPath = destinationPath;
         }
     }
 
@@ -98,9 +108,11 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
 
     private void OnAnimatorSet(ChangeEvent<Object> evt)
     {
+        RemoveOldSerializedAnimatorReference();
         if (evt.newValue is AnimatorController runtime)
         {
             m_AnimatorController = runtime;
+            SetSerializedAnimatorReference();
             m_ConfirmButton.SetEnabled(true);
             m_ParameterTabHandler.AddParameterListFromAnimator(m_AnimatorController);
         }
@@ -110,9 +122,32 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
         }
     }
 
+    private void RemoveOldSerializedAnimatorReference()
+    {
+        m_Root.Unbind();
+        m_SerializedAnimator?.Dispose();
+    }
+
+    private void SetSerializedAnimatorReference()
+    {
+        m_SerializedAnimator = new(m_AnimatorController);
+        m_Root.TrackSerializedObjectValue(m_SerializedAnimator, CheckForRelevantChanges);
+    }
+
+    private void CheckForRelevantChanges(SerializedObject @object)
+    {
+        // For now assume the parameter list changed and readd the parameters
+        m_ParameterTabHandler.AddParameterListFromAnimator(m_AnimatorController);
+    }
+
     private void Clear()
     {
         m_ConfirmButton.SetEnabled(false);
         m_ParameterTabHandler.Clear();
+    }
+
+    private void OnDetached(DetachFromPanelEvent evt)
+    {
+        RemoveOldSerializedAnimatorReference();
     }
 }

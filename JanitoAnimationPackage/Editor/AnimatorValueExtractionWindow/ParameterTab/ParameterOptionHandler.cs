@@ -1,4 +1,7 @@
+using Janito.EditorExtras;
 using System;
+using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,30 +11,31 @@ namespace Janito.Animations.Editor
     {
         private const string ParameterButtonName = "ParameterButton";
         private const string IsGeneratedToggleName = "IsGeneratedToggle";
-        private const string ParameterLabelName = "ParameterLabel";
+        private const string ParameterNameLabelName = "ParameterNameLabel";
+        private const string ParameterTypeLabelName = "ParameterTypeLabel";
 
         public Action<ParameterOptionHandler, bool> OnParameterSelectionChanged = delegate { };
 
         public readonly VisualElement Root;
         public readonly AnimatorControllerParameter Parameter;
+        public readonly SerializedProperty ParameterProperty;
 
         private readonly Button m_ParameterButton;
         private readonly Toggle m_IsGeneratedToggle;
-        private readonly Label m_ParameterLabel;
+        private readonly Label m_ParameterNameLabel;
+        private readonly Label m_ParameterTypeLabel;
 
         public ParameterOptionHandler(VisualElement root, AnimatorControllerParameter parameter)
         {
             Root = root;
             Parameter = parameter;
 
-            m_ParameterButton = Root.Q<Button>(ParameterButtonName);
-            Debug.Assert(m_ParameterButton != null);
-            m_IsGeneratedToggle = Root.Q<Toggle>(IsGeneratedToggleName);
-            Debug.Assert(m_IsGeneratedToggle != null);
-            m_ParameterLabel = Root.Q<Label>(ParameterLabelName);
-            Debug.Assert(m_ParameterLabel != null);
+            ValidationLibrary.SetAndValidateReference(ref m_ParameterButton, Root.Q<Button>(ParameterButtonName));
+            ValidationLibrary.SetAndValidateReference(ref m_IsGeneratedToggle, Root.Q<Toggle>(IsGeneratedToggleName));
+            ValidationLibrary.SetAndValidateReference(ref m_ParameterNameLabel, Root.Q<Label>(ParameterNameLabelName));
+            ValidationLibrary.SetAndValidateReference(ref m_ParameterTypeLabel, Root.Q<Label>(ParameterTypeLabelName));
 
-            SetParameterName();
+            SetParameterLabels();
             SetupEvents();
         }
 
@@ -48,9 +52,10 @@ namespace Janito.Animations.Editor
             OnParameterSelectionChanged = null;
         }
 
-        private void SetParameterName()
+        private void SetParameterLabels()
         {
-            m_ParameterLabel.text = Parameter.name;
+            m_ParameterNameLabel.text = Parameter.name;
+            m_ParameterTypeLabel.text = Parameter.type.ToString();
         }
 
         private void SetupEvents()
