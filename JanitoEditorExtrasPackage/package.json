@@ -1,7 +1,7 @@
 {
   "name": "com.janito.editorextras",
   "version": "1.0.1",
-  "displayName": "Janito`s Editor Extras Package",
+  "displayName": "Janito Editor Extras Package",
   "description": "Library of functions and attributes to expand the Unity editor functionality.",
   "author": {
     "name": "Janfranco H.M."

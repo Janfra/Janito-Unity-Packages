@@ -3,6 +3,11 @@
 ## [Unreleased]
 ### Added
 - **Validation Library**: A set of utility functions to validate references, throwing an exception on condition failure.
+- **Path Library**: A set of utility functions to retrieve folder paths that are relative to the project. Wraps around Unity's libraries to open the file explorer and retrieve relative path information.
+
+### Changed
+- **Renamed Library**: Renamed `EditorExtrasLibrary` to `TypeLibrary` to better reflect the contents and purpose of the library.
+- **Folder Restructured**: Created subfolders for Drawers and Libraries scripts, moved relevant files to the new folders.
 
 ### Changed
 - **Restructured Runtime Folder**: Created an attributes folder to contain all runtime available attributes, moving all existing attributes inside.

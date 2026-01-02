@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Janito.EditorExtras
 {
-    public static class EditorExtrasLibrary
+    public static class TypeLibrary
     {
         /// <summary>
         /// Checks that a type meets all flagged requirements to be elegible

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Janito.EditorExtras.EditorExtrasLibrary;
+using static Janito.EditorExtras.TypeLibrary;
 
 namespace Janito.EditorExtras.Editor
 {
