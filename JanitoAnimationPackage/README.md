@@ -27,7 +27,7 @@ In the case of only having this package, the file should look like the following
 ```json
 {
     "dependencies": {
-        "com.janito.animationpackage": "https://github.com/Janfra/Janito-Unity-Packages.git?path=/JanitoAnimationPackage"
+        "com.janito.animationpackage": "https://github.com/Janfra/Janito-Unity-Packages.git?path=/JanitoEditorExtrasPackage"
     }
 }
 ```
