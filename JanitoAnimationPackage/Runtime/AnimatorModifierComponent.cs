@@ -11,8 +11,8 @@ namespace Janito.Animations
         [SerializeReference, ChildTypeSelection(typeof(AnimatorParameterValueListener))]
         private AnimatorParameterValueListener[] _staticValueListeners;
 
-        private List<AnimatorParameterValueListener> _onUpdateValueListeners;
-        private List<AnimatorParameterValueListener> _onLateUpdateValueListeners;
+        private List<AnimatorParameterValueListener> _onUpdateValueListeners = new();
+        private List<AnimatorParameterValueListener> _onLateUpdateValueListeners = new();
 
         private void Awake()
         {
