@@ -36,7 +36,7 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
     private ParameterTabHandler m_ParameterTabHandler;
     private SerializedObject m_SerializedAnimator;
 
-    [MenuItem("Tools/Janito/AnimatorValueExtractionWindow")]
+    [MenuItem("Tools/Janito/Animator Value Extraction Window")]
     public static void ShowWindow()
     {
         AnimatorValueExtractionWindow wnd = GetWindow<AnimatorValueExtractionWindow>();
