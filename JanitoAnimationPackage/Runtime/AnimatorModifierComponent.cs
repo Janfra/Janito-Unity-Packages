@@ -70,7 +70,7 @@ namespace Janito.Animations
             foreach (AnimatorParameterValueListener listener in _staticValueListeners)
             {
                 if (listener == null) continue;
-                if (IsListenerParameterValid(listener))
+                if (!IsListenerParameterValid(listener))
                 {
                     Debug.LogWarning($"Ignored {listener} due to having invalid parameter for animator in {name}. Parameter: {(listener.Parameter ? listener.Parameter.ReadableParameterName : null)}");
                     continue;
