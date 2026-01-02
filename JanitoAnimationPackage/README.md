@@ -17,11 +17,11 @@ A robust Unity framework designed to eliminate string-based animator management.
 ### Via Manifest Json
 1. Open your project folder and locate the `Packages` folder.
 2. Open `manifest.json`.
-3. Add the following to the dependencies list: 
-        ```json
+3. Add the following to the dependencies list:
+```json
         "com.janito.animationpackage": "https://github.com/Janfra/Janito-Unity-Packages.git?path=/JanitoAnimationPackage"
-        ```
-4. Ensure a comma is placed at the end of the previous line if necessary.
+```
+4. Ensure a comma is placed at the end of the previous line if not at the end of the list.
 
 In the case of only having this package, the file should look like the following example:
 ```json
