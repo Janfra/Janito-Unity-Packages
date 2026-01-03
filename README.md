@@ -7,10 +7,10 @@ A suite of Unity Editor extensions and runtime utilities designed to eliminate m
 
 **Eliminate string-based animator management.** This package provides a type-safe bridge between your C# logic and Unity's Animator system.
 
-- **Animator Value Extraction:** Batch-generate AnimatorParameterHasher assets directly from any Animator Controller.
-- **Live-Sync UI:** Real-time tracking of Animator changes within the Editor.
+- **Animator Value Extraction:** Batch-generate `AnimatorParameterHasher` assets directly from any Animator Controller.
+- **Live-Sync UI:** Real-time tracking of `Animator Controller` changes within the Editor.
 - **Listener System:** Frame-by-frame parameter monitoring and velocity-tracking modules.
-- **Extension Methods:** Native Animator extensions for high-performance, string-less parameter setting.
+- **Extension Methods:** Native `Animator` extensions for high-performance, string-less parameter setting.
 </details>
 
 <details>
