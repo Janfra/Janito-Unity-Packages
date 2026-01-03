@@ -6,11 +6,11 @@ namespace Janito.Animations
     public class AnimatorBoolParameterEvent : AnimatorParameterEvent
     {
         [SerializeField]
-        private bool _value;
+        private bool m_Value;
 
         public override void ApplyEventValue(AnimatorModifierComponent modifierComponent)
         {
-            modifierComponent.SetParameterBool(Parameter, _value);
+            modifierComponent.SetParameterBool(Parameter, m_Value);
         }
     }
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+### Changed
+- **Matching Extension Methods**: Changed extension methods to match the Native `Animator` methods they wrap around after noticing slight difference in naming.
+
+### Internal
+- **Private Naming Convention Change**: Changed naming convention for private variables, updated all variables to match new format.
+
 ## [1.0.3] - 2026-01-02
 #### Animator Value Extraction Window Improvements
 

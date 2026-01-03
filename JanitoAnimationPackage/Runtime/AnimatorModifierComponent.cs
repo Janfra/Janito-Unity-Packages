@@ -7,16 +7,16 @@ namespace Janito.Animations
     public class AnimatorModifierComponent : MonoBehaviour
     {
         [SerializeField, HideInInspector]
-        private Animator _animator;
+        private Animator m_Animator;
         [SerializeReference, ChildTypeSelection(typeof(AnimatorParameterValueListener))]
-        private AnimatorParameterValueListener[] _staticValueListeners;
+        private AnimatorParameterValueListener[] m_StaticValueListeners;
 
-        private List<AnimatorParameterValueListener> _onUpdateValueListeners = new();
-        private List<AnimatorParameterValueListener> _onLateUpdateValueListeners = new();
+        private List<AnimatorParameterValueListener> m_OnUpdateValueListeners = new();
+        private List<AnimatorParameterValueListener> m_OnLateUpdateValueListeners = new();
 
         private void Awake()
         {
-            if (_animator == null)
+            if (m_Animator == null)
             {
                 throw new System.NullReferenceException($"Animator reference is null on {nameof(AnimatorModifierComponent)} attached to GameObject: {gameObject.name}. Please set the reference before playing.");
             }
@@ -26,17 +26,17 @@ namespace Janito.Animations
 
         private void Update()
         {
-            foreach (AnimatorParameterValueListener listener in _onUpdateValueListeners)
+            foreach (AnimatorParameterValueListener listener in m_OnUpdateValueListeners)
             {
-                listener.Update(_animator);
+                listener.Update(m_Animator);
             }
         }
 
         private void LateUpdate()
         {
-            foreach (AnimatorParameterValueListener listener in _onLateUpdateValueListeners)
+            foreach (AnimatorParameterValueListener listener in m_OnLateUpdateValueListeners)
             {
-                listener.Update(_animator);
+                listener.Update(m_Animator);
             }
         }
 
@@ -47,27 +47,27 @@ namespace Janito.Animations
 
         public void SetParameterFloat(AnimatorParameterHasher parameter, float value)
         {
-            _animator.SetFloat(parameter.ID, value);
+            m_Animator.SetFloat(parameter, value);
         }
 
         public void SetParameterInt(AnimatorParameterHasher parameter, int value)
         {
-            _animator.SetInteger(parameter.ID, value);
+            m_Animator.SetInteger(parameter, value);
         }
 
         public void SetParameterBool(AnimatorParameterHasher parameter, bool value)
         {
-            _animator.SetBool(parameter.ID, value);
+            m_Animator.SetBool(parameter, value);
         }
 
         public void SetParameterTrigger(AnimatorParameterHasher parameter)
         {
-            _animator.SetTrigger(parameter.ID);
+            m_Animator.SetTrigger(parameter);
         }
 
         private void InitialiseStaticValueListeners()
         {
-            foreach (AnimatorParameterValueListener listener in _staticValueListeners)
+            foreach (AnimatorParameterValueListener listener in m_StaticValueListeners)
             {
                 if (listener == null) continue;
                 if (!IsListenerParameterValid(listener))
@@ -78,23 +78,23 @@ namespace Janito.Animations
 
                 if (listener.UpdateType == ParameterUpdateType.OnUpdate)
                 {
-                    _onUpdateValueListeners.Add(listener);
+                    m_OnUpdateValueListeners.Add(listener);
                 }
                 else if (listener.UpdateType == ParameterUpdateType.OnLateUpdate)
                 {
-                    _onLateUpdateValueListeners.Add(listener);
+                    m_OnLateUpdateValueListeners.Add(listener);
                 }
             }
         }
 
         private bool IsListenerParameterValid(AnimatorParameterValueListener listener)
         {
-            return listener.Parameter && listener.Parameter.HasParameter(_animator);
+            return listener.Parameter && listener.Parameter.HasParameter(m_Animator);
         }
 
         private void OnValidate()
         {
-            _animator = _animator ? _animator : GetComponent<Animator>();
+            m_Animator = m_Animator ? m_Animator : GetComponent<Animator>();
         }
     }
 }

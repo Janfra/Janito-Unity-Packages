@@ -6,23 +6,23 @@ namespace Janito.Animations
     public class AnimatorParameterHasher : ScriptableObject
     {
         [SerializeField]
-        private string _parameterName = string.Empty;
+        private string m_ParameterName = string.Empty;
         [SerializeField]
-        private AnimatorControllerParameterType _type;
+        private AnimatorControllerParameterType m_Type;
 
         [SerializeField]
-        private int? _id;
+        private int? m_ID;
         public int ID => GetID();
-        public string ReadableParameterName => _parameterName;
-        public bool IsValid => _id != null;
+        public string ReadableParameterName => m_ParameterName;
+        public bool IsValid => m_ID != null;
 
         public void Initialise(string parameterName, AnimatorControllerParameterType type)
         {
-            if (!string.IsNullOrEmpty(_parameterName)) return;
+            if (!string.IsNullOrEmpty(m_ParameterName)) return;
 
-            _parameterName = parameterName;
-            _type = type;
-            _id = Animator.StringToHash(_parameterName);
+            m_ParameterName = parameterName;
+            m_Type = type;
+            m_ID = Animator.StringToHash(m_ParameterName);
         }
 
         public bool HasParameter(Animator animator)
@@ -37,9 +37,9 @@ namespace Janito.Animations
             {
                 if (parameter.nameHash == ID)
                 {
-                    if (parameter.type != _type)
+                    if (parameter.type != m_Type)
                     {
-                        Debug.LogWarning($"Animator parameter '{_parameterName}' type mismatch. Expected: {_type}, Found: {parameter.type} in Animator '{animator.runtimeAnimatorController.name}'");
+                        Debug.LogWarning($"Animator parameter '{m_ParameterName}' type mismatch. Expected: {m_Type}, Found: {parameter.type} in Animator '{animator.runtimeAnimatorController.name}'");
                     }
 
                     return true;
@@ -50,7 +50,7 @@ namespace Janito.Animations
 
         private int GetID()
         {
-            if (_id is int id)
+            if (m_ID is int id)
             {
                 return id;
             }
@@ -63,13 +63,13 @@ namespace Janito.Animations
 
         private void OnValidate()
         {
-            if (_parameterName.Length > 0)
+            if (m_ParameterName.Length > 0)
             {
-                _id = Animator.StringToHash(_parameterName);
+                m_ID = Animator.StringToHash(m_ParameterName);
             }
             else
             {
-                _id = null;
+                m_ID = null;
             }
         }
     }

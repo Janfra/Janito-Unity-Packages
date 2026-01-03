@@ -5,8 +5,8 @@ namespace Janito.Animations
     public abstract class AnimatorParameterEvent : ScriptableObject
     {
         [SerializeField]
-        private AnimatorParameterHasher _parameter;
-        public AnimatorParameterHasher Parameter => _parameter;
+        private AnimatorParameterHasher m_Parameter;
+        public AnimatorParameterHasher Parameter => m_Parameter;
 
         public abstract void ApplyEventValue(AnimatorModifierComponent modifierComponent);
 
@@ -15,7 +15,7 @@ namespace Janito.Animations
         {
             if (Application.isPlaying)
             {
-                if (_parameter == null)
+                if (m_Parameter == null)
                 {
                     Debug.LogWarning($"Animator Parameter is null on {nameof(AnimatorParameterEvent)} ScriptableObject: {name}", this);
                 }

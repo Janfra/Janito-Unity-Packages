@@ -7,8 +7,8 @@ namespace Janito.Animations
     public abstract class AnimatorParameterValueListener
     {
         [SerializeField]
-        private AnimatorParameterHasher _parameter;
-        public AnimatorParameterHasher Parameter => _parameter;
+        private AnimatorParameterHasher m_Parameter;
+        public AnimatorParameterHasher Parameter => m_Parameter;
 
         abstract public ParameterUpdateType UpdateType { get; }
 

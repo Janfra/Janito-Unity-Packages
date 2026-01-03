@@ -7,13 +7,13 @@ namespace Janito.Animations
     public class AnimatorParameterVelocityListener : AnimatorParameterValueListener
     {
         [SerializeField]
-        private Rigidbody _rigidbody;
+        private Rigidbody m_Rigidbody;
         public override ParameterUpdateType UpdateType => ParameterUpdateType.OnLateUpdate;
 
         public override void Update(Animator animator)
         {
             // Sqr velocity for quicker calculation
-            animator.SetFloat(Parameter.ID, _rigidbody.linearVelocity.sqrMagnitude);
+            animator.SetFloat(Parameter.ID, m_Rigidbody.linearVelocity.sqrMagnitude);
         }
     }
 }
