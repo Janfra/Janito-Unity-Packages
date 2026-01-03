@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: b3931db5f1f90b54893a622087abd65f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_DrawerAsset: {fileID: 9197481963319205126, guid: eae2667d42cb123458a5e339fde383b0, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

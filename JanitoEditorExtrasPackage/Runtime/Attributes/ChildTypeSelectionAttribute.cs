@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace Janito.EditorExtras
@@ -8,6 +9,7 @@ namespace Janito.EditorExtras
     /// </summary>
     /// <remarks>Must be used along with the SerializeReference to work as intended</remarks>
     /// <seealso cref="SerializeReference"/>
+    [Conditional("UNITY_EDITOR")]
     [AttributeUsage(AttributeTargets.Field)]
     public class ChildTypeSelectionAttribute : PropertyAttribute
     {

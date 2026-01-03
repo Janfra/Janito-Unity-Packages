@@ -1,32 +1,35 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.2] - 2026-01-03
 ### Added
-- **Validation Library**: A set of utility functions to validate references, throwing an exception on condition failure.
-- **Path Library**: A set of utility functions to retrieve folder paths that are relative to the project. Wraps around Unity's libraries to open the file explorer and retrieve relative path information.
+- **Type Caching**: Integrated `TypeCache` into `TypeLibrary` for high-performance type discovery and filtering via `TypeCriteria`. *Note: Old functions still exist, but are not used internally anymore.*
+- **Criteria Filter**: Added a method to filter arbitrary type lists based on constraints defined in `TypeCriteria`.
+- **Validation Library**: Added a set of utility functions within `ValidationLibrary` to validate object references, providing explicit exception handling on condition failure.
+- **Path Library**: Added a set of utility functions within `PathLibrary` to retrieve project-relative folder paths, wrapping Unity's file explorer APIs for easier asset pathing.
+- **Namespace Display**: Type options in `ChildTypeSelectionAttribute` now include namespaces to distinguish between duplicate class names in different scopes.
 
 ### Changed
-- **Renamed Library**: Renamed `EditorExtrasLibrary` to `TypeLibrary` to better reflect the contents and purpose of the library.
-- **Folder Restructured**: Created subfolders for Drawers and Libraries scripts, moved relevant files to the new folders.
+- **Library Renaming [Breaking]**: Renamed `EditorExtrasLibrary` to `TypeLibrary` to more accurately reflect its purpose of handling type discovery and filtering.
+- **Project Restructuring [Breaking]**: Reorganized the Editor and Runtime folders into subfolders (Drawers, Libraries, Attributes) for better maintainability.
+- **Performance Optimization**: Updated `ChildTypeSelectionAttribute` to utilize cached discovery methods from `TypeLibrary`.
+- **Type Selection Overhaul**: Updated `ChildTypeSelectionAttribute` with a case-insensitive search bar, namespace display for duplicate types, and a refined UI layout.
+- **Attribute Stripping**: Decorated `ChildTypeSelectionAttribute` with `[Conditional("UNITY_EDITOR")]` to ensure it is stripped from runtime builds.
 
-### Changed
-- **Restructured Runtime Folder**: Created an attributes folder to contain all runtime available attributes, moving all existing attributes inside.
-
-## [1.0.1]
+## [1.0.1] - 2025-12-31
 #### Array & List Support
 
 ### Added
-- **Array Support on Type Selection**: Type selection now supports arrays and lists elements, displaying the dropdown field for each element.
-- **Fail-Fast Type Selection Validation**: Explicit validation within `ChildTypeSelectionAttribute` that throws an `ArgumentException` if the requested base type inherits from Unity Engine Object class.
+- **Collection Support**: Added support for Array and List elements to `ChildTypeSelectionAttribute`, providing a dropdown field for each individual element.
+- **Strict Base Type Validation**: Added fail-fast validation to throw an `ArgumentException` if the requested base type inherits from `UnityEngine.Object` (as `[SerializeReference]` only supports non-Unity objects).
 
 ### Fixed
-- **Incorrect Invalid Type**: The filter of invalid types had a typo and was removing all types since they weren't inhering from Unity Object class. Now it correctly instead removes classes inheriting from Unity Object class.
+- **Type Filter Logic**: Fixed a typo in the invalid type filter that caused all types to be removed. It now correctly excludes only classes inheriting from `UnityEngine.Object`.
 
 ## [1.0.0] - 2025-12-30
 #### First Release
 
 ###  Added   
-- **Type Selection Attribute**: New attribute to expose a dropdown field on the Inspector for assigning types to `[SerializeReference]` fields.
-- **Type Discovery Library**: Set of utility functions to retrieve and filter child types, integrated with the `TypeCriteria` system.
-- **TypeCriteria Structure**: Support for bidirectional constraints (e.g., `Abstract` vs `NotAbstract`) when filtering types.
-- **Fail-Fast Configuration Validation**: Explicit validation within `TypeCriteria` that throws an `ArgumentException` if contradictory requirements (including and excluding the same flag) are provided during construction.
+- **Type Selection Attribute**: Added attribute `ChildTypeSelectionAttribute` to expose a dropdown field on the Inspector for assigning types to `[SerializeReference]` fields.
+- **TypeCriteria Structure**: Added support for bidirectional constraints (e.g., `Abstract` vs `NotAbstract`) when filtering types.
+- **Type Discovery Library**: Added a set of utility functions within `EditorExtrasLibrary` to retrieve and filter child types, integrated with the `TypeCriteria` system.
+- **Fail-Fast Configuration Validation**: Added explicit validation within `TypeCriteria` that throws an `ArgumentException` if contradictory requirements (including and excluding the same flag) are provided during construction.

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Janito.EditorExtras
 {
@@ -60,6 +62,19 @@ namespace Janito.EditorExtras
                 return true;
             }
 
+            /// <summary>
+            /// Removes any types that do not meet the criteria set on this object
+            /// </summary>
+            /// <param name="types">List of types to filter through</param>
+            public void FilterTypeList(List<Type> types)
+            {
+                for (int i = types.Count - 1; i >= 0; i--)
+                {
+                    var type = types[i];
+                    if (type == null || !MeetsCriteria(type)) types.RemoveAt(i);
+                }
+            }
+
             // Helper to identify if both 'Include' and 'Exclude' flags are set
             private static bool HasContradiction(TypeRequirementFlags requirement, TypeRequirementFlags include, TypeRequirementFlags exclude)
             {
@@ -89,6 +104,30 @@ namespace Janito.EditorExtras
             }
 
             return childrenTypes;
+        }
+
+        public static IEnumerable<Type> GetCachedEnumerableOfTypeChildren<T>(TypeCriteria elegibilityCriteria = new(), bool sortedByName = false)
+        {
+            Type requestedType = typeof(T);
+            return GetCachedEnumerableOfTypeChildren(requestedType, elegibilityCriteria, sortedByName);
+        }
+
+        public static IEnumerable<Type> GetCachedEnumerableOfTypeChildren(Type requestedType, TypeCriteria elegibilityCriteria = new(), bool sortedByName = false)
+        {
+            var typeCollection = TypeCache.GetTypesDerivedFrom(requestedType);
+            List<Type> validTypes = new();
+
+            foreach (var type in typeCollection.Where(childType => elegibilityCriteria.MeetsCriteria(childType)))
+            {
+                validTypes.Add(type);
+            }
+
+            if (sortedByName)
+            {
+                validTypes.Sort(SortTypeByName);
+            }
+
+            return validTypes;
         }
 
         private static int SortTypeByName(Type a, Type b)
