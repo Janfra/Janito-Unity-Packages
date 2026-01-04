@@ -131,6 +131,7 @@ namespace Janito.Animations.Editor
                 handler.OnClear();
             }
 
+            m_SelectedParameters.Clear();
             m_ParameterHandlers.Clear();
             m_ParameterBox.Clear();
         }

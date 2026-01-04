@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.4] - 2026-01-04
+### Fixed
+- **Selection Clearing**: Fixed issue with object selection not being properly cleared between changes of `AnimatorController` target.
+
 ### Changed
 - **Matching Extension Methods**: Changed extension methods to match the Native `Animator` methods they wrap around after noticing slight difference in naming.
 
