@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,13 +35,8 @@ namespace Janito.EditorExtras.Editor
         /// <returns>Was a valid path within the project assets folder selected</returns>
         public static bool TryGetProjectSavePathFromUser(out string destinationPath, string folder = "Assets", string title = "Select Destination", string defaultName = "")
         {
-            string path = EditorUtility.SaveFolderPanel(title, folder, defaultName);
-
-            if (TryGetProjectRelativePath(path, out destinationPath))
-            {
-                return true;
-            }
-            return false;
+            destinationPath = EditorUtility.SaveFolderPanel(title, folder, defaultName);
+            return IsPathInAssetsPath(destinationPath);
         }
 
         /// <summary>
@@ -51,18 +47,45 @@ namespace Janito.EditorExtras.Editor
         /// <returns>Is the absolute path within the project</returns>
         public static bool TryGetProjectRelativePath(string absolutePath, out string relativePath)
         {
-            if (!string.IsNullOrEmpty(absolutePath))
+            if (IsPathInAssetsPath(absolutePath))
             {
                 string sanitizedPath = absolutePath.Replace('\\', '/'); // Ensure forward slashes, FileUtil fails otherwise
-                if (absolutePath.StartsWith(Application.dataPath))
-                {
-                    relativePath = FileUtil.GetProjectRelativePath(absolutePath);
-                    return true;
-                }
+                relativePath = FileUtil.GetProjectRelativePath(absolutePath);
+                return true;
             }
 
             relativePath = string.Empty;
             return false;
+        }
+
+        /// <summary>
+        /// Returns if an absolute path is located within the project assets folder.
+        /// </summary>
+        /// <param name="absolutePath">Absolute path being checked</param>
+        /// <returns>True if the absolute path located within the assets folder, otherwise false</returns>
+        public static bool IsPathInAssetsPath(string absolutePath)
+        {
+            if (string.IsNullOrEmpty(absolutePath)) return false;
+            return absolutePath.StartsWith(Application.dataPath);
+        }
+
+        /// <summary>
+        /// Creates a folder at the provided absolute path if the folder does not exist.
+        /// </summary>
+        /// <param name="absolutePath">Path to create folder at</param>
+        public static void CreateFolderIfMissing(string absolutePath)
+        {
+            if (string.IsNullOrEmpty(absolutePath))
+            {
+                Debug.LogError("Unable to create folder with missing path.");
+                return;
+            }
+
+            if (!Directory.Exists(absolutePath))
+            {
+                Directory.CreateDirectory(absolutePath);
+                AssetDatabase.Refresh();
+            }
         }
     }
 }
