@@ -138,7 +138,7 @@ namespace Janito.Timers
         }
 
 #if UNITY_EDITOR
-        [MenuItem("Tools/Print Current PlayerLoopSystem")]
+        [MenuItem("Tools/Janito/Logging/Print Current PlayerLoopSystem")]
         private static void PrintPlayerLoopSystemToConsole()
         {
             static void PrintPlayerLoopSystemRecursive(PlayerLoopSystem system, int indentLevel, StringBuilder sb)
