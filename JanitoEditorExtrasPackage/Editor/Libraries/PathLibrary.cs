@@ -12,9 +12,20 @@ namespace Janito.EditorExtras.Editor
         /// <param name="title">Title of the folder selection window</param>
         /// <param name="defaultName"></param>
         /// <returns>Was a valid path within the project assets folder selected</returns>
-        public static bool TryGetProjectPathFromUser(out string destinationPath, string title = "Select Destination", string defaultName = "")
+        public static bool TryGetProjectPathFromUser(out string destinationPath, string folder = "Assets", string title = "Select Destination", string defaultName = "")
         {
-            string path = EditorUtility.OpenFolderPanel(title, "Assets", defaultName);
+            string path = EditorUtility.OpenFolderPanel(title, folder, defaultName);
+
+            if (TryGetProjectRelativePath(path, out destinationPath))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool TryGetProjectSavePathFromUser(out string destinationPath, string folder = "Assets", string title = "Select Destination", string defaultName = "")
+        {
+            string path = EditorUtility.SaveFolderPanel(title, folder, defaultName);
 
             if (TryGetProjectRelativePath(path, out destinationPath))
             {
