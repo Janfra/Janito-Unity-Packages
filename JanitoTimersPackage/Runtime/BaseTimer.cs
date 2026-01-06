@@ -89,8 +89,11 @@ namespace Janito.Timers
                 IsRegistered = true;
                 TimerManager.RegisterTimer(this);
                 OnTimerStart.Invoke();
+                OnStart();
             }
         }
+
+        protected virtual void OnStart() { }
 
         /// <summary>
         /// Unregisters the timer from the TimerManager and stops ticking it. 
@@ -102,8 +105,11 @@ namespace Janito.Timers
                 IsRegistered = false;
                 TimerManager.UnregisterTimer(this);
                 OnTimerStop.Invoke();
+                OnStop();
             }
         }
+
+        protected virtual void OnStop() { }
 
         /// <summary>
         /// Advances the state of the implementing timer by one unit of time or step.
@@ -121,13 +127,25 @@ namespace Janito.Timers
         /// Resumes the ticking of the timer if it was previously paused.
         /// </summary>
         /// </remarks>This does not start the timer if it has not been started yet. It needs to be registered first.</remarks>
-        public void Resume() => IsPaused = false;
+        public void Resume()
+        {
+            IsPaused = false;
+            OnResume();
+        }
+
+        protected virtual void OnResume() { }
 
         /// <summary>
         /// Stops the ticking of the timer until resumed.
         /// </summary>
         /// </remarks>This does not unregister the timer from the TimerManager. It only pauses its ticking.</remarks>
-        public void Pause() => IsPaused = true;
+        public void Pause() 
+        {
+            IsPaused = true;
+            OnPaused();
+        }
+
+        protected virtual void OnPaused() { }
 
         /// <summary>
         /// Resets the timer to its initial time value.
