@@ -82,9 +82,12 @@ namespace Janito.Timers
         public void StartTimer()
         {
             RemainingTime = _InitialTime;
-            Resume();
+            if (IsPaused)
+            {
+                Resume();
+            }
 
-            if (!IsActive)
+            if (!IsRegistered)
             {
                 IsRegistered = true;
                 TimerManager.RegisterTimer(this);
