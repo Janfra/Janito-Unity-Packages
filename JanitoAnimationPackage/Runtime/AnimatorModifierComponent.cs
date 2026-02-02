@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Janito.Animations
 {
+    [RequireComponent(typeof(Animator))]
     public class AnimatorModifierComponent : MonoBehaviour
     {
         [SerializeField, HideInInspector]
@@ -16,6 +17,7 @@ namespace Janito.Animations
 
         private void Awake()
         {
+            m_Animator = m_Animator ? m_Animator : GetComponent<Animator>();
             if (m_Animator == null)
             {
                 throw new System.NullReferenceException($"Animator reference is null on {nameof(AnimatorModifierComponent)} attached to GameObject: {gameObject.name}. Please set the reference before playing.");

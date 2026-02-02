@@ -1,4 +1,7 @@
 # Changelog
+## [1.0.5] - 2026-02-02
+### Fixed
+- **Animator Requirement**: Fixed issue with `AnimatorModifierComponent` not automatically adding an `Animator` when added, leading to errors due to missing animator in game object.
 
 ## [1.0.4] - 2026-01-04
 ### Fixed
