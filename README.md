@@ -1,5 +1,5 @@
 # Janito Unity Framework
-A suite of Unity Editor extensions and runtime utilities designed to eliminate manual workflow and enforce code safety.
+A suite of Unity Editor extensions and runtime utilities designed to reduce manual workflow and enforce code safety.
 
 ## 📦 Included Packages
 <details>
@@ -27,10 +27,10 @@ A set of attributes and libraries to enhance the Inspector and enforce fail-fast
 <details>
 <summary><b>3. Janito Timers Package</b> <i>(Click to expand)</i></summary>
 
-**Self-managed runtime timing.** A personalized extension of the *Improved Timers* architecture from [Adam Myhre - Unity Improved Timers](https://github.com/adammyhre/Unity-Improved-Timers), integrated into the Janito ecosystem.
+**Self-managed runtime timing.** A personalized extension of the *Improved Timers* architecture from [Adam Myhre - Unity Improved Timers](https://github.com/adammyhre/Unity-Improved-Timers).
 
 - **Timer Manager**: Fully self-managed timers that handle their own lifecycle with a simple start and forget.
-- **ReadOnly Alternatives**: Immutable interface to safely expose timer data without allowing external modification.
+- **ReadOnly Alternatives**: Interface to safely expose timer immutable data and events without allowing external modification.
 - **Extendable Core**: Seamlessly create custom timer types by inheriting from the `BaseTimer` class.
 </details>
 
