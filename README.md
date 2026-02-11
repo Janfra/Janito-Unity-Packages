@@ -34,6 +34,9 @@ A set of attributes and libraries to enhance the Inspector and enforce fail-fast
 - **Extendable Core**: Seamlessly create custom timer types by inheriting from the `BaseTimer` class.
 </details>
 
+> [!WARNING]
+> The **Janito Audio Package** is deprecated due to functional overlap with native Unity features. It remains in the repository for reference only; active use is not recommended.
+
 ## 🛠 Installation
 Packages can be installed through **Unity Package Manager (UPM)** via Git URLs. Each package includes a guide on how to install the package within its `README` file.
 
