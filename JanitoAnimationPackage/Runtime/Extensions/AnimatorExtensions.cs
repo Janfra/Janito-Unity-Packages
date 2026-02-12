@@ -23,5 +23,20 @@ namespace Janito.Animations
         {
             animator.SetTrigger(parameter.ID);
         }
+
+        public static float GetFloat(this Animator animator, AnimatorParameterHasher parameter)
+        {
+            return animator.GetFloat(parameter.ID);
+        }
+
+        public static int GetInteger(this Animator animator, AnimatorParameterHasher parameter)
+        {
+            return animator.GetInteger(parameter.ID);
+        }
+
+        public static bool GetBool(this Animator animator, AnimatorParameterHasher parameter)
+        {
+            return animator.GetBool(parameter.ID);
+        }
     }
 }

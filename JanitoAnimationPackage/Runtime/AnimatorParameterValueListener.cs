@@ -8,7 +8,10 @@ namespace Janito.Animations
     {
         [SerializeField]
         private AnimatorParameterHasher m_Parameter;
-        public AnimatorParameterHasher Parameter => m_Parameter;
+        public AnimatorParameterHasher Parameter { 
+            get { return m_Parameter; }
+            protected set { m_Parameter = m_Parameter ?? value; }
+        } 
 
         abstract public ParameterUpdateType UpdateType { get; }
 

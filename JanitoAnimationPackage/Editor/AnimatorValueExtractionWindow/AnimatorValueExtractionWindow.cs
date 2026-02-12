@@ -86,7 +86,7 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
         if (m_AnimatorController != null) 
         {
             m_AnimatorField.value = m_AnimatorController;
-            if (m_SerializedAnimator == null) SetSerializedAnimatorReference();
+            SetSerializedAnimatorReference();
         } 
     }
 
@@ -130,6 +130,11 @@ public sealed class AnimatorValueExtractionWindow : EditorWindow
 
     private void SetSerializedAnimatorReference()
     {
+        if (m_SerializedAnimator != null)
+        {
+            RemoveOldSerializedAnimatorReference();
+        }
+
         m_SerializedAnimator = new(m_AnimatorController);
         m_Root.TrackSerializedObjectValue(m_SerializedAnimator, CheckForRelevantChanges);
     }

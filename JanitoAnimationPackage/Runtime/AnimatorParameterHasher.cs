@@ -15,6 +15,7 @@ namespace Janito.Animations
         public int ID => GetID();
         public string ReadableParameterName => m_ParameterName;
         public bool IsValid => m_ID != null;
+        public AnimatorControllerParameterType Type => m_Type;
 
         public void Initialise(string parameterName, AnimatorControllerParameterType type)
         {
