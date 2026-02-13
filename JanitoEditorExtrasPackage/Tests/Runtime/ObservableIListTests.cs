@@ -13,7 +13,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         [Test]
         public void ObservableIList_ConstructorInitialisesBaseClass()
         {
-            var observableUnderTest = GetNewEmptyObservableList();
+            using var observableUnderTest = GetNewEmptyObservableList();
 
             Assert.That(observableUnderTest.ReadOnlyCollection, Is.Not.Null);
         }
@@ -21,7 +21,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         [Test]
         public void ObservableIList_ConstructorNullArgumentIsValid()
         {
-            var observableUnderTest = new ObservableIList<List<int>, int>(null);
+            using var observableUnderTest = new ObservableIList<List<int>, int>(null);
 
             Assert.That(observableUnderTest.ReadOnlyCollection, Is.Not.Null);
         }
@@ -31,7 +31,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             var populatedList = new List<int>() { 1, 2 };
 
-            var observableUnderTest = GetObservableListFromList(populatedList);
+            using var observableUnderTest = GetObservableListFromList(populatedList);
 
             Assert.That(observableUnderTest.ReadOnlyList, Is.EqualTo(populatedList));
             Assert.That(observableUnderTest.ReadOnlyCollection, Is.EqualTo(populatedList));
@@ -40,7 +40,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         [Test]
         public void ReadOnlyList_PropertyReturnsReadOnlyInstance()
         {
-            var observableUnderTest = GetNewEmptyObservableList();
+            using var observableUnderTest = GetNewEmptyObservableList();
 
             Assert.That(observableUnderTest.ReadOnlyList, Is.Not.Null);
         }
@@ -50,7 +50,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int appliedValue = 4;
             var populatedList = new List<int> { 1, 2, 3 };
-            var observableUnderTest = GetObservableListFromList(populatedList);
+            using var observableUnderTest = GetObservableListFromList(populatedList);
 
             observableUnderTest[0] = appliedValue;
 
@@ -62,7 +62,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             var targetValue = 5;
             var populatedList = new List<int> { targetValue };
-            var observableUnderTest = GetObservableListFromList(populatedList);
+            using var observableUnderTest = GetObservableListFromList(populatedList);
 
             var value = observableUnderTest[0];
 
@@ -74,7 +74,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int? callbackValue = null;
             var list = new List<int>() { 0 };
-            var observableUnderTest = GetObservableListFromList(list);
+            using var observableUnderTest = GetObservableListFromList(list);
             void SetCallbackValue(int value) { callbackValue = value; }
             observableUnderTest.OnItemAdded += SetCallbackValue;
 
@@ -89,7 +89,7 @@ namespace Janito.EditorExtras.Tests.Runtime
             int? callbackValue = null;
             int initialValue = 5;
             var list = new List<int>() { initialValue };
-            var observableUnderTest = GetObservableListFromList(list);
+            using var observableUnderTest = GetObservableListFromList(list);
             void SetCallbackValue(int value) { callbackValue = value; }
             observableUnderTest.OnItemRemoved += SetCallbackValue;
 

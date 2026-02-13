@@ -22,7 +22,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         [Test]
         public void ObservableCollection_NullArgumentIsValidForConstructor()
         {
-            var observableUnderTest = new ObservableCollection<List<int>, int>(null);
+            using var observableUnderTest = new ObservableCollection<List<int>, int>(null);
 
             // No direct access is provided to the internal collection, instead we use the Read Only property exposed as it is a reference to the internal collection as a Read Only.
             Assert.That(observableUnderTest.ReadOnlyCollection, Is.Not.Null);
@@ -38,7 +38,7 @@ namespace Janito.EditorExtras.Tests.Runtime
                 3
             };
 
-            var observableUnderTest = GetCollectionFromListToTest(populatedList);
+            using var observableUnderTest = GetCollectionFromListToTest(populatedList);
 
             Assert.That(observableUnderTest.ReadOnlyCollection, Is.Not.Null);
             Assert.That(observableUnderTest.Count, Is.EqualTo(populatedList.Count));
@@ -50,7 +50,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             // Arrange
             var addedValue = 100;
-            var observableUnderTest = GetNewEmptyCollectionToTest();
+            using var observableUnderTest = GetNewEmptyCollectionToTest();
 
             // Act
             observableUnderTest.Add(addedValue);
@@ -71,7 +71,7 @@ namespace Janito.EditorExtras.Tests.Runtime
                 target,
                 target + 1
             };
-            var observableUnderTest = GetCollectionFromListToTest(populatedList);
+            using var observableUnderTest = GetCollectionFromListToTest(populatedList);
 
             // Act
             var result = observableUnderTest.Remove(target);
@@ -92,7 +92,7 @@ namespace Janito.EditorExtras.Tests.Runtime
                 target - 1,
                 target + 1
             };
-            var observableUnderTest = GetCollectionFromListToTest(populatedList);
+           using var observableUnderTest = GetCollectionFromListToTest(populatedList);
 
             // Act
             var result = observableUnderTest.Remove(target);
@@ -109,7 +109,7 @@ namespace Janito.EditorExtras.Tests.Runtime
             // Arrange
             int? callbackValue = null;
             int addedValue = 1;
-            var observableUnderTest = GetNewEmptyCollectionToTest();
+            using var observableUnderTest = GetNewEmptyCollectionToTest();
             void SetCallbackValue(int value) => callbackValue = value;
             observableUnderTest.OnItemAdded += SetCallbackValue;
 
@@ -130,7 +130,7 @@ namespace Janito.EditorExtras.Tests.Runtime
             {
                 targetValue
             };
-            var observableUnderTest = GetCollectionFromListToTest(populatedList);
+            using var observableUnderTest = GetCollectionFromListToTest(populatedList);
             void SetCallbackValue(int value) => callbackValue = value;
             observableUnderTest.OnItemRemoved += SetCallbackValue;
 
@@ -147,7 +147,7 @@ namespace Janito.EditorExtras.Tests.Runtime
             // Arrange
             int? callbackValue = null;
             int targetValue = 1;
-            var observableUnderTest = GetNewEmptyCollectionToTest();
+            using var observableUnderTest = GetNewEmptyCollectionToTest();
             void SetCallbackValue(int value) => callbackValue = value;
             observableUnderTest.OnItemRemoved += SetCallbackValue;
 
@@ -167,7 +167,7 @@ namespace Janito.EditorExtras.Tests.Runtime
                 1,
                 2
             };
-            var observableUnderTest = GetCollectionFromListToTest(populatedList);
+            using var observableUnderTest = GetCollectionFromListToTest(populatedList);
 
             // Act
             observableUnderTest.Clear();
@@ -187,7 +187,7 @@ namespace Janito.EditorExtras.Tests.Runtime
                 1,
                 2
             };
-            var observableUnderTest = GetCollectionFromListToTest(populatedList);
+            using var observableUnderTest = GetCollectionFromListToTest(populatedList);
             void SetCallbackValue() => wasInvoked = true;
             observableUnderTest.OnCleared += SetCallbackValue;
 
@@ -203,7 +203,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             // Arrange
             bool wasInvoked = false;
-            var observableUnderTest = GetNewEmptyCollectionToTest();
+            using var observableUnderTest = GetNewEmptyCollectionToTest();
             void SetCallbackValue() => wasInvoked = true;
             observableUnderTest.OnCleared += SetCallbackValue;
 

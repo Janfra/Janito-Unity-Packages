@@ -10,7 +10,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int argumentValue = 10;
 
-            var observableUnderTest = new ObservableValue<int>(argumentValue);
+            using var observableUnderTest = new ObservableValue<int>(argumentValue);
 
             Assert.That(observableUnderTest.Value, Is.EqualTo(argumentValue));
         }
@@ -20,7 +20,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int originalValue = 10;
             int newValue = 5;
-            var observableUnderTest = new ObservableValue<int>(originalValue);
+            using var observableUnderTest = new ObservableValue<int>(originalValue);
 
             observableUnderTest.Value = newValue;
 
@@ -32,7 +32,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int? callbackValue = null;
             int newValue = 10;
-            var observableUnderTest = new ObservableValue<int>();
+            using var observableUnderTest = new ObservableValue<int>();
             void ValueChangedCallback(int value) { callbackValue = value; }
             observableUnderTest.OnValueChanged += ValueChangedCallback;
 
@@ -46,7 +46,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int originalValue = 10;
             int newValue = 5;
-            var observableUnderTest = new ObservableValue<int>(originalValue);
+            using var observableUnderTest = new ObservableValue<int>(originalValue);
 
             observableUnderTest.ChangeWithoutNotify(newValue);
 
@@ -58,7 +58,7 @@ namespace Janito.EditorExtras.Tests.Runtime
         {
             int? callbackValue = null;
             int newValue = 10;
-            var observableUnderTest = new ObservableValue<int>();
+            using var observableUnderTest = new ObservableValue<int>();
             void ValueChangedCallback(int value) { callbackValue = value; }
             observableUnderTest.OnValueChanged += ValueChangedCallback;
 
