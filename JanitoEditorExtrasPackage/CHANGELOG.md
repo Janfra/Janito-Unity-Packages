@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.3] - 2026-02-13
+#### Generic Observables & Unit Tests
+
+### Added
+- **Observables System**: Introduced the `Janito.EditorExtras.Observables` namespace, containing generic types that trigger events upon data changes.
+- **Observable Value**: Added `ObservableValue<T>` to monitor and notify of changes on an individual field.
+- **Observable Collection**: Added `ObservableCollection<TCollection, TItem>` to monitor and notify of changes on collections.
+- **Observable IList**: Added `ObservableIList<TList, TItem>` (extending `ObservableCollection`) to support generic `IList<T>` types.
+- **Observable List**: Added `ObservableList<TItem>` (extending `ObservableIList`) specifically for `List<T>` types.
+- **Lifecycle Management**: Implemented `IDisposable` and `UnsubscribeAll()` across observable types to prevent memory leaks and simplify event cleanup.
+
+### Internal
+- **Unit Testing**: Implemented NUnit-based tests (`ObservableValueTests`, `ObservableCollectionTests`, and `ObservableIListTests`) to ensure that code regression does not occur.
+
 ## [1.0.2] - 2026-01-03
 ### Added
 - **Type Caching**: Integrated `TypeCache` into `TypeLibrary` for high-performance type discovery and filtering via `TypeCriteria`. *Note: Old functions still exist, but are not used internally anymore.*
