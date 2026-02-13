@@ -5,7 +5,7 @@
 
 ### Added
 - **Observables System**: Introduced the `Janito.EditorExtras.Observables` namespace, containing generic types that trigger events upon data changes.
-- **Observable Value**: Added `ObservableValue<T>` to monitor and notify of changes on an individual field.
+- **Observable Value**: Added `ObservableValue<T>` to monitor and notify of changes on an individual values.
 - **Observable Collection**: Added `ObservableCollection<TCollection, TItem>` to monitor and notify of changes on collections.
 - **Observable IList**: Added `ObservableIList<TList, TItem>` (extending `ObservableCollection`) to support generic `IList<T>` types.
 - **Observable List**: Added `ObservableList<TItem>` (extending `ObservableIList`) specifically for `List<T>` types.
