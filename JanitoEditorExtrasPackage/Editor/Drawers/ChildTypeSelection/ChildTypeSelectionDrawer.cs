@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Janito.EditorExtras.TypeLibrary;
+using static Janito.EditorExtras.Editor.TypeLibrary;
 
 namespace Janito.EditorExtras.Editor
 {
@@ -217,7 +217,7 @@ namespace Janito.EditorExtras.Editor
         /// <summary>
         /// Criteria used to retrieve the displayed child types. Abstract and interface types are excluded due to not being compatible with CreateInstance.
         /// </summary>
-        private readonly TypeCriteria m_TypeCriteria = new(TypeCriteria.TypeRequirementFlags.NotAbstract | TypeCriteria.TypeRequirementFlags.NotInterface);
+        private readonly TypeCriteria m_TypeCriteria = new TypeCriteria().ExcludeAbstract().ExcludeInterface();
         private ChildTypeSelectionAttribute m_ChildTypeAttribute => (ChildTypeSelectionAttribute)attribute;
         private List<Type> m_ChildTypes;
 
@@ -233,7 +233,7 @@ namespace Janito.EditorExtras.Editor
                 throw new ArgumentException($"[ChildTypeSelection] The type {m_ChildTypeAttribute.BaseType.Name} is not assignable to {fieldInfo.FieldType.Name} type in field {fieldInfo.Name}. Please assign compatible types.");
             }
 
-            m_ChildTypes = new(GetCachedEnumerableOfTypeChildren(m_ChildTypeAttribute.BaseType, m_TypeCriteria, true));
+            m_ChildTypes = new(GetChildTypes(m_ChildTypeAttribute.BaseType, m_TypeCriteria, true));
             FilterInvalidTypes();
 
             var propertyDrawer = new ChildTypeSelectionPropertyWrapper(m_DrawerAsset.Instantiate(), property, m_ChildTypes);

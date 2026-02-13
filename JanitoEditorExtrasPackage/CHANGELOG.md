@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.4] - 2026-02-13
+### Added
+- **Interface Support**: Enabled interfaces support for `ChildTypeSelectionAttribute`, allowing interfaces to be used as base types for selection.
+- **Fluent Type Criteria**: Introduced a fluent API for `TypeCriteria` via extension methods, removing the need for manual bitwise operations.
+
+### Changed
+- **Namespace Reorganisation [Breaking]**: Moved `TypeLibrary` and `TypeCriteria` into the `Janito.EditorExtras.Editor` namespace.
+- **Type Criteria Moved [Breaking]**: Moved `TypeCriteria` to be outside of `TypeLibrary`, contained within `Janito.EditorExtras.Editor` namespace. 
+- **API Renaming [Breaking]**: Renamed `GetCachedEnumerableOfTypeChildren` to `GetChildTypes` to provide a more concise and readable entry point.
+- **IList Filtering**: Refactored `TypeCriteria` to accept `IList<T>` instead of specific `List<T>` implementations, improving decoupling.
+
+### Internal
+- **Deprecation Path**: Marked `GetEnumerableOfTypeChildren` as `[Obsolete]` with explicit compiler warnings directing users toward the `GetChildTypes` functions.
+
 ## [1.0.3] - 2026-02-13
 #### Generic Observables & Unit Tests
 

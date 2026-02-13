@@ -1,7 +1,6 @@
 using Janito.EditorExtras.Observables;
 using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Janito.EditorExtras.Tests.Runtime
 {
