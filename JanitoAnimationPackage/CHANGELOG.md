@@ -1,4 +1,18 @@
 # Changelog
+## [1.0.6] - 2026-02-19
+#### Animator Event Automation & Initialization Guards
+
+### Added
+- **Asset Generation Command**: Added an Editor menu command to automatically generate `AnimatorParameterEvent` assets from existing `AnimatorParameterHasher` assets.
+- **Initialization Parity**: Implemented an `Initialise` method in `AnimatorParameterEvent` to match `AnimatorParameterHasher`, ensuring consistent single-initialization guards and a unified API for programmatically created assets.
+- **Redundant Initialization Warnings**: Added console log warnings for both `AnimatorParameterEvent` and `AnimatorParameterHasher` if initialization is attempted more than once.
+
+### Changed
+- **Editor-Only Compilation**: Implemented **conditional compilation** (`#if UNITY_EDITOR`) within `AnimatorParameterEvent` to ensure the class compiles correctly in standalone builds by isolating editor-specific logic.
+
+### Internal
+- **Type Support Validation**: The new generation tool includes validation to ensure only **Bool** and **Trigger** types are processed; **Float** and **Int** types currently throw a `NotImplementedException`.
+
 ## [1.0.5] - 2026-02-02
 ### Fixed
 - **Animator Requirement**: Fixed issue with `AnimatorModifierComponent` not automatically adding an `Animator` when added, leading to errors due to missing animator in game object.
@@ -56,7 +70,7 @@
 ## [1.0.0] - 2025-11-01
 #### First Release
 
-## Added
+### Added
 - **Animator Modifier Component**: Added `AnimatorModifierComponent`, a wrapper that provides methods for modifying Animator states via code or Unity events.
 - **Animator Parameter Hashing**: Added `AnimatorParameterHasher` assets to handle parameter hashing in the Editor. Replaces string-based access with reusable hashes to improve performance and prevent "parameter not found" errors.
 - **Parameter Event System**: Added `AnimatorParameterEvent` assets to trigger predefined animator changes automatically. Fully compatible with the new hashing system and `AnimatorModifierComponent`.

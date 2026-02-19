@@ -1,6 +1,6 @@
 {
   "name": "com.janito.animationpackage",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "displayName": "Janito Animation Package",
   "description": "Generic animation components and scriptable objects to modify and access Unity animations. Aims to expose additional Unity Events and information to the editor to create quick prototypes. \n<b>WARNING: This package depends on the Janito Editor Extras package.</b>",
   "author": {
