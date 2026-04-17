@@ -5,9 +5,12 @@ namespace Janito.Animations
     [CreateAssetMenu(fileName = "AnimatorParameterEvent", menuName = "Scriptable Objects/Animation/Animator Trigger Parameter Event")]
     public class AnimatorTriggerParameterEvent : AnimatorParameterEvent
     {
+        [SerializeField]
+        private bool m_IsReset = false;
+
         public override void ApplyEventValue(AnimatorModifierComponent modifierComponent)
         {
-            modifierComponent.SetParameterTrigger(Parameter);
+            modifierComponent.SetParameterTrigger(Parameter, m_IsReset);
         }
     }
 }

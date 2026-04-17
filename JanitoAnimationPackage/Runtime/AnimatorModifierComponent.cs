@@ -62,9 +62,16 @@ namespace Janito.Animations
             m_Animator.SetBool(parameter, value);
         }
 
-        public void SetParameterTrigger(AnimatorParameterHasher parameter)
+        public void SetParameterTrigger(AnimatorParameterHasher parameter, bool isReset = false)
         {
-            m_Animator.SetTrigger(parameter);
+            if (isReset)
+            {
+                m_Animator.ResetTrigger(parameter);
+            }
+            else
+            {
+                m_Animator.SetTrigger(parameter);
+            }
         }
 
         private void InitialiseStaticValueListeners()

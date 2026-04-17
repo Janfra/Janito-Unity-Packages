@@ -24,6 +24,11 @@ namespace Janito.Animations
             animator.SetTrigger(parameter.ID);
         }
 
+        public static void ResetTrigger(this Animator animator, AnimatorParameterHasher parameter)
+        {
+            animator.ResetTrigger(parameter.ID);
+        }
+
         public static float GetFloat(this Animator animator, AnimatorParameterHasher parameter)
         {
             return animator.GetFloat(parameter.ID);

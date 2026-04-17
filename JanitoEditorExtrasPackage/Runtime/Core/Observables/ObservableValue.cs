@@ -1,8 +1,10 @@
 using System;
+using UnityEngine;
 
 namespace Janito.EditorExtras.Observables
 {
-    public sealed class ObservableValue<T> : IDisposable
+    [Serializable]
+    public sealed class ObservableValue<T> : IDisposable, IReadOnlyObservableValue<T>
     {
         public event Action<T> OnValueChanged;
         public T Value 
@@ -11,6 +13,7 @@ namespace Janito.EditorExtras.Observables
             set { ChangeValue(value); }
         }
 
+        [SerializeField]
         private T m_Value;
 
         public ObservableValue(T value = default) 

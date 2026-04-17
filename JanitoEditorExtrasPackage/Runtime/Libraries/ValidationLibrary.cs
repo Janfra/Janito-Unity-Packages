@@ -52,6 +52,16 @@ namespace Janito.EditorExtras
             reference = value;
         }
 
+        public static void SetAndValidateReference<T>(ref T reference, string referenceName, T value, string additionalMessage) where T : class
+        {
+            if (value == null)
+            {
+                Debug.Break();
+                throw new NullReferenceException($"{GetRequiredReferenceMissingPrefix()} `{referenceName}`. {additionalMessage}");
+            }
+            reference = value;
+        }
+
         private static string GetRequiredReferenceMissingPrefix()
         {
             return REQUIRED_REFERENCE_MISSING_PREFIX;

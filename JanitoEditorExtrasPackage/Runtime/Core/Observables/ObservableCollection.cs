@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Janito.EditorExtras.Observables
 {
-    public class ObservableCollection<TCollection, TItem> : ICollection<TItem>, IReadOnlyCollection<TItem>, IDisposable
+    public class ObservableCollection<TCollection, TItem> : ICollection<TItem>, IReadOnlyCollection<TItem>, IReadOnlyObservableCollection<TItem>, IDisposable
         where TCollection : ICollection<TItem>, IReadOnlyCollection<TItem>, new()
     {
         public event Action OnCleared;
