@@ -8,7 +8,7 @@ All code is a result of my learning on extending the editor; there may be errors
 - **Observables System**: A pure C# implementation of the observer pattern within the `Janito.EditorExtras.Observables` namespace, exposing events for changes on values and collections.
 - **Type-Safe Serialization**: Use `ChildTypeSelectionAttribute` to provide searchable, namespace-aware dropdowns for `[SerializeReference]` fields with full support for interfaces and abstract classes.
 - **Fluent Type Discovery**: A high-performance discovery system using Unity’s `TypeCache`. Create readable type constraints for filtering types.
-- **Utility Libraries**: Dedicated libraries for pathing (`PathLibrary`), validation (`ValidationLibrary`), and type management (`TypeLibrary`).
+- **Utility Libraries**: Dedicated libraries for pathing (`PathLibrary`), validation (`ValidationLibrary`), logging (`LogLibrary`), and type management (`TypeLibrary`).
 - **Memory Safety**: Built-in `IDisposable` support across all observable types to prevent memory leaks.
 
 ## 📦 Installation
@@ -76,7 +76,31 @@ var criteria = new TypeCriteria().ExcludeAbstract();
 var childrenTypes = TypeLibrary.GetChildTypes<BaseClass>(criteria);
 ```
 
-## 📜 Changelog
+### 4. Using Log Library
+Log messages with the type of the logger for easy identification of the source, and log to the console only in development builds and in editor.
+
+```csharp
+using Janito.EditorExtras;
+
+public class MyComponent : MonoBehaviour {
+    void Start() {
+        // Will not be logged in non development build
+        this.LogInDevelopment("Secret Game Started!"); // Log result: "[MyComponent] Secret Game Started!"
+
+        // You can still log in all cases if you like!
+        this.LogPrefixed("Game Started!"); // Log result: "[MyComponent] Game Started!"
+
+        // Both cases will provide the object reference to the log to be able to click the message in the console and select the object.
+    }
+}
+```
+
+## 📜 Recent Changelog Summary
+### - 2026-05-14 (v1.0.5)
+- **Added**: Added attribute `ReadOnlyAttribute` to disable editing a property in the inspector.
+- **Added**: Added a set of utility extension methods to `UnityEngine.Object` for logging.
+- **Added**: Introduced generic types for defining singleton classes with different specialisations.
+
 ### - 2026-02-13 (v1.0.4)
 - **Added:** Interface support for `ChildTypeSelectionAttribute`.
 - **Added:** Fluent API for `TypeCriteria` filtering.

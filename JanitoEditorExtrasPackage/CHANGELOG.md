@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.5] - 2026-05-14
+### Added
+- **Read Only Inspector**: Added attribute `ReadOnlyAttribute` to disable editing a property in the inspector, allowing to expose information in the inspector for debugging purposes without the risk of accidental editing.
+- **Log Library**: Added a set of extension methods to `UnityEngine.Object` to prefix logged messages with the type name for easier identification. Includes equivalent alternatives that only log in editor and development builds.
+- **Singletons System**: Introduced the `Janito.EditorExtras.Singletons` namespace, containing generic types for defining singleton classes.
+- **Lazy Singleton**: Added `LazySingleton<TDerived>` to automatically generate the singleton instance if no valid instance is already set.
+- **Mono Singleton**: Added `MonoSingleton<T>` for `Component` types in order to assign the `Instance` reference on `Awake()` or in the case of not having a valid reference, generate a `GameObject` with the required component. It can be configured to persist in between scenes.
+ 
 ## [1.0.4] - 2026-02-13
 ### Added
 - **Interface Support**: Enabled interfaces support for `ChildTypeSelectionAttribute`, allowing interfaces to be used as base types for selection.
