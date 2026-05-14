@@ -1,3 +1,4 @@
+using Janito.EditorExtras;
 using UnityEngine;
 
 namespace Janito.Animations
@@ -28,7 +29,7 @@ namespace Janito.Animations
         {
             if (!string.IsNullOrEmpty(m_ParameterName))
             {
-                Debug.LogWarning($"{nameof(AnimatorParameterHasher)} '{name}' is already initialised with parameter name '{m_ParameterName}' and type '{m_Type}'. Reinitialisation with new parameter name '{parameterName}' and type '{type}' is not allowed. Ignoring new values.", this);
+                this.LogWarningInDevelopment($"'{name}' is already initialised with parameter name '{m_ParameterName}' and type '{m_Type}'. Reinitialisation with new parameter name '{parameterName}' and type '{type}' is not allowed. Ignoring new values.");
                 return;
             }
 
@@ -41,7 +42,7 @@ namespace Janito.Animations
         {
             if (!IsValid)
             {
-                Debug.LogError($"Animator parameter name is empty in AnimatorParameterHasher '{name}'.");
+                this.LogErrorInDevelopment($"Animator parameter name is empty in AnimatorParameterHasher '{name}'.");
                 return false;
             }
 
@@ -51,7 +52,7 @@ namespace Janito.Animations
                 {
                     if (parameter.type != m_Type)
                     {
-                        Debug.LogWarning($"Animator parameter '{m_ParameterName}' type mismatch. Expected: {m_Type}, Found: {parameter.type} in Animator '{animator.runtimeAnimatorController.name}'");
+                        this.LogWarningInDevelopment($"Animator parameter '{m_ParameterName}' type mismatch. Expected: {m_Type}, Found: {parameter.type} in Animator '{animator.runtimeAnimatorController.name}'");
                     }
 
                     return true;
@@ -68,14 +69,24 @@ namespace Janito.Animations
             }
             else
             {
-                Debug.LogError($"Animator parameter name is empty in AnimatorParameterHasher '{name}'. Returning ID as -1.");
+                // Lazy initialisation as fallback
+                if (!string.IsNullOrEmpty(m_ParameterName))
+                {
+                    m_ID = Animator.StringToHash(m_ParameterName);
+                    if (m_ID is int newId)
+                    {
+                        return newId;
+                    }
+                }
+
+                this.LogErrorInDevelopment($"Animator parameter name is empty in AnimatorParameterHasher '{name}'. Returning ID as -1.");
                 return -1;
             }
         }
 
         private void OnValidate()
         {
-            if (m_ParameterName.Length > 0)
+            if (!string.IsNullOrEmpty(m_ParameterName))
             {
                 m_ID = Animator.StringToHash(m_ParameterName);
             }

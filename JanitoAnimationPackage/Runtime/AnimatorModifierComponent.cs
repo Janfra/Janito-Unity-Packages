@@ -81,7 +81,7 @@ namespace Janito.Animations
                 if (listener == null) continue;
                 if (!IsListenerParameterValid(listener))
                 {
-                    Debug.LogWarning($"Ignored {listener} due to having invalid parameter for animator in {name}. Parameter: {(listener.Parameter ? listener.Parameter.ReadableParameterName : null)}");
+                    this.LogWarningInDevelopment($"Ignored {listener} due to having invalid parameter for animator in {name}. Parameter: {(listener.Parameter ? listener.Parameter.ReadableParameterName : null)}");
                     continue;
                 }
 

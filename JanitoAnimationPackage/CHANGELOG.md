@@ -1,4 +1,12 @@
 # Changelog
+
+## [1.0.7] - 2026-05-14
+### Fixed
+- **Hasher ID Missing**: `AnimatorParameterHasher` could sometimes be missing their `ID` on WebGL builds due to not caching the value properly. Now when `ID` is not found, it will attempt to cache the value if a valid parameter name is present.
+
+### Changed
+- **Development Logging**: Changed logging to include a prefix with the type of the source and to only be output in development builds and in editor. ***(Note: New logs utilise `Janito Editor Extras` logging library).***
+
 ## [1.0.6] - 2026-02-19
 #### Animator Event Automation & Initialization Guards
 

@@ -1,8 +1,5 @@
 using UnityEngine;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using Janito.EditorExtras;
 
 namespace Janito.Animations
 {
@@ -22,7 +19,7 @@ namespace Janito.Animations
         {
             if (m_Parameter != null)
             {
-                Debug.LogWarning($"{nameof(AnimatorParameterEvent)} '{name}' is already initialised with parameter '{m_Parameter.name}'. Reinitialisation with new parameter name '{parameter.name}' is not allowed. Ignoring new parameter.", this);
+                this.LogWarningInDevelopment($"'{name}' is already initialised with parameter '{m_Parameter.name}'. Reinitialisation with new parameter name '{parameter.name}' is not allowed. Ignoring new parameter.");
                 return;
             }
 
@@ -38,7 +35,7 @@ namespace Janito.Animations
             {
                 if (m_Parameter == null)
                 {
-                    Debug.LogWarning($"Animator Parameter is null on {nameof(AnimatorParameterEvent)} ScriptableObject: {name}", this);
+                    this.LogWarningInDevelopment($"Animator Parameter is null on ScriptableObject: {name}");
                 }
             }
         }
