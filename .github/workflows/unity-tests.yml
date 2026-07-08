@@ -42,7 +42,7 @@ jobs:
         with:
           packageMode: true
           testMode: ${{ matrix.testMode }} 
-          projectPath: /${{ matrix.projectPath }}
+          projectPath: ./${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           artifactsPath: ${{ matrix.unityVersion }}-${{ matrix.packageName }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
