@@ -93,10 +93,11 @@ namespace Janito.EditorExtras.Editor
                 }
             })
             {
-                text = buttonAttribute.ButtonLabel ?? method.Name,
-                tooltip = buttonAttribute.Tooltip,
-                enabledSelf = CanButtonBeActiveInCurrentApplicationMode(buttonAttribute)
+                text = string.IsNullOrEmpty(buttonAttribute.ButtonLabel) ? method.Name : buttonAttribute.ButtonLabel,
+                tooltip = buttonAttribute.Tooltip
             };
+
+            button.SetEnabled(CanButtonBeActiveInCurrentApplicationMode(buttonAttribute));
             return true;
         }
 
