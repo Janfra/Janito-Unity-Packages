@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        unityVersion: ['2022.3.0f1', '6000.1f1']
+        unityVersion: ['2022.3.0f1', '6000.0f1']
         testMode:
           - playmode
           - editmode
@@ -42,7 +42,7 @@ jobs:
         with:
           packageMode: true
           testMode: ${{ matrix.testMode }} 
-          projectPath: ./${{ matrix.projectPath }}
+          projectPath: /${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           artifactsPath: ${{ matrix.unityVersion }}-${{ matrix.packageName }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
