@@ -23,48 +23,56 @@ namespace Janito.EditorExtras
         /// </summary>
         /// <param name="object"></param>
         /// <param name="message"></param>
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogInDevelopment(this Object @object, string message)
         {
             @object.LogPrefixed(message);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogWarningInDevelopment(this Object @object, string message)
         {
             @object.LogWarningPrefixed(message);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogErrorInDevelopment(this Object @object, string message)
         {
             @object.LogErrorPrefixed(message);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogAssertionInDevelopment(this Object @object, string message)
         {
             @object.LogAssertionPrefixed(message);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogInDevelopment<T>(string message, Object context = null)
         {
             LogPrefixed<T>(message, context);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogWarningInDevelopment<T>(string message, Object context = null)
         {
             LogWarningPrefixed<T>(message, context);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogErrorInDevelopment<T>(string message, Object context = null)
         {
             LogErrorPrefixed<T>(message, context);
         }
 
+        [HideInCallstack]
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
         public static void LogAssertionInDevelopment<T>(string message, Object context = null)
         {
@@ -78,41 +86,49 @@ namespace Janito.EditorExtras
         /// </summary>
         /// <param name="object"></param>
         /// <param name="message"></param>
+        [HideInCallstack]
         public static void LogPrefixed(this Object @object, string message)
         {
             Debug.Log($"[{@object.GetType().Name}] " + message, @object);
         }
 
+        [HideInCallstack]
         public static void LogWarningPrefixed(this Object @object, string message)
         {
             Debug.LogWarning($"[{@object.GetType().Name}] " + message, @object);
         }
 
+        [HideInCallstack]
         public static void LogErrorPrefixed(this Object @object, string message)
         {
             Debug.LogError($"[{@object.GetType().Name}] " + message, @object);
         }
 
+        [HideInCallstack]
         public static void LogAssertionPrefixed(this Object @object, string message)
         {
             Debug.LogAssertion($"[{@object.GetType().Name}] " + message, @object);
         }
 
+        [HideInCallstack]
         public static void LogPrefixed<T>(string message, Object context = null)
         {
             Debug.Log($"[{typeof(T).Name}] " + message, context);
         }
 
+        [HideInCallstack]
         public static void LogWarningPrefixed<T>(string message, Object context = null)
         {
             Debug.LogWarning($"[{typeof(T).Name}] " + message, context);
         }
 
+        [HideInCallstack]
         public static void LogErrorPrefixed<T>(string message, Object context = null)
         {
             Debug.LogError($"[{typeof(T).Name}] " + message, context);
         }
 
+        [HideInCallstack]
         public static void LogAssertionPrefixed<T>(string message, Object context = null)
         {
             Debug.LogAssertion($"[{typeof(T).Name}] " + message, context);
