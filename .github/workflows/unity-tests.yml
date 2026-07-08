@@ -1,0 +1,56 @@
+name: Unity Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion: ['2022.3', '6000.1']
+        testMode:
+          - playmode
+          - editmode
+        include:
+          - projectPath: JanitoEditorExtrasPackage
+            packageName: com.janito.editorextras
+          # Uncomment when tests are added:
+          # - projectPath: JanitoAnimationPackage
+          #   packageName: com.janito.animationpackage
+          # - projectPath: JanitoTimersPackage
+          #   packageName: com.janito.timerspackage
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+      
+      - name: Run Tests - ${{ matrix.packageName }}
+        uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          packageMode: true
+          testMode: ${{ matrix.testMode }} 
+          projectPath: ./${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          artifactsPath: ${{ matrix.unityVersion }}-${{ matrix.packageName }}-artifacts
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: ${{ matrix.testMode }} Test Results
+      
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.unityVersion }}-${{ matrix.packageName }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
