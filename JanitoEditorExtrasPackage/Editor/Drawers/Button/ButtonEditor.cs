@@ -68,6 +68,13 @@ namespace Janito.EditorExtras.Editor
             button = null;
             var buttonAttribute = method.GetCustomAttribute<ButtonAttribute>();
             if (buttonAttribute == null) return false;
+
+            if (method.GetParameters().Length > 0)
+            {
+                LogLibrary.LogErrorPrefixed<ButtonAttribute>($"Method {method.Name} on {@object.name} has parameters and cannot be invoked by a button. Buttons can only be created for parameterless methods.", @object);
+                return false;
+            }
+
             button = new Button(() =>
             {
                 try
