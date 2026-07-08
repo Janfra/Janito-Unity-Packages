@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        unityVersion: ['2022.3.0f1', '6000.0f1']
+        unityVersion: ['2022.3.0f1', '6000.0.0f1']
         testMode:
           - playmode
           - editmode
