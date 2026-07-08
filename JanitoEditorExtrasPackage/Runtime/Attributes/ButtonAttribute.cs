@@ -14,6 +14,7 @@ namespace Janito.EditorExtras
         All = PlayMode | EditorMode,
     }
 
+    // TODO: Add support for static methods and methods with parameters. Currently, only methods without parameters are supported.
     /// <summary>
     /// Marks the method to have a button drawn in the inspector that will attempt to execute on clicked.
     /// </summary>
