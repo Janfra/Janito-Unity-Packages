@@ -5,6 +5,9 @@
 - **Button Attribute**: Added attribute `ButtonAttribute` to draw a button in the inspector that executes the target parameterless method on click. Buttons can be set to only be valid in certain application modes.
 - **Log Alternative**: Added set of functions in `LogLibrary` to allow for prefix logging with objects that do not derive from `UnityEngine.Object`.
 
+### Fixed
+- **Logging Callstack**: Double-clicking log entries in the console now correctly navigates to the caller script instead of inside the `LogLibrary` helper functions.
+
 ### Internal
 - **Conditional Attributes**: Replaced conditional compilation with conditional attributes for readability.
 
