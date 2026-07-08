@@ -1,6 +1,8 @@
 # Janito Unity Framework
 A suite of Unity Editor extensions and runtime utilities designed to reduce manual workflow and enforce code safety.
 
+[![Unity Tests](https://github.com/Janfra/Janito-Unity-Packages/actions/workflows/unity-tests.yml/badge.svg)](https://github.com/Janfra/Janito-Unity-Packages/actions/workflows/unity-tests.yml)
+
 ## 📦 Included Packages
 <details>
 <summary><b>1. Janito Animation Package</b> <i>(Click to expand)</i></summary>
