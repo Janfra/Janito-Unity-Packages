@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased - 2026-07-08
+### Added
+- **Log Alternative**: Added set of functions in `LogLibrary` to allow for prefix logging with objects that do not derive from `UnityEngine.Object`.
+
+### Internal
+- **Conditional Attributes**: Replaced conditional compilation with conditional attributes for readability.
+
 ## [1.0.5] - 2026-05-14
 ### Added
 - **Read Only Inspector**: Added attribute `ReadOnlyAttribute` to disable editing a property in the inspector, allowing to expose information in the inspector for debugging purposes without the risk of accidental editing.
