@@ -111,12 +111,12 @@ namespace Janito.EditorExtras.Editor
         {
             if (!IsButtonAlwaysExecutable(attribute))
             {
-                if (EditorApplication.isPlaying && !attribute.ExecutionMode.HasFlag(ButtonExecutionMode.PlayMode))
+                if (EditorApplication.isPlaying && !attribute.ExecutionMode.HasFlag(ButtonExecutionModes.PlayMode))
                 {
                     LogLibrary.LogWarningPrefixed<ButtonAttribute>($"Method {method.Name} on {@object.name} is marked as an editor button and cannot be invoked during runtime.", @object);
                     return false;
                 }
-                else if (!EditorApplication.isPlaying && !attribute.ExecutionMode.HasFlag(ButtonExecutionMode.EditorMode))
+                else if (!EditorApplication.isPlaying && !attribute.ExecutionMode.HasFlag(ButtonExecutionModes.EditorMode))
                 {
                     LogLibrary.LogWarningPrefixed<ButtonAttribute>($"Method {method.Name} on {@object.name} is marked as a runtime button and cannot be invoked in the editor.", @object);
                     return false;
@@ -128,13 +128,13 @@ namespace Janito.EditorExtras.Editor
 
         private static bool IsButtonAlwaysExecutable(ButtonAttribute attribute)
         {
-            return attribute.ExecutionMode == ButtonExecutionMode.All;
+            return attribute.ExecutionMode == ButtonExecutionModes.All;
         }
 
         private static bool CanButtonBeActiveInCurrentApplicationMode(ButtonAttribute attribute)
         {
-            return attribute.ExecutionMode.HasFlag(ButtonExecutionMode.PlayMode) && EditorApplication.isPlaying || 
-                attribute.ExecutionMode.HasFlag(ButtonExecutionMode.EditorMode) && !EditorApplication.isPlaying;
+            return attribute.ExecutionMode.HasFlag(ButtonExecutionModes.PlayMode) && EditorApplication.isPlaying || 
+                attribute.ExecutionMode.HasFlag(ButtonExecutionModes.EditorMode) && !EditorApplication.isPlaying;
         }
     }
 }

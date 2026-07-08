@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Janito.EditorExtras
 {
     /// <summary>
-    /// Determines in which application mode this button can be executed on.
+    /// Determines in which application mode this button can be executed.
     /// </summary>
     [Flags]
-    public enum ButtonExecutionMode
+    public enum ButtonExecutionModes
     {
         PlayMode = 1 << 0,
         EditorMode = 1 << 1,
@@ -21,10 +21,10 @@ namespace Janito.EditorExtras
     public class ButtonAttribute : PropertyAttribute 
     {
         public readonly string ButtonLabel;
-        public readonly ButtonExecutionMode ExecutionMode;
+        public readonly ButtonExecutionModes ExecutionMode;
         public readonly string Tooltip;
 
-        public ButtonAttribute(string buttonLabel = null, ButtonExecutionMode executionMode = ButtonExecutionMode.All, string tooltip = null)
+        public ButtonAttribute(string buttonLabel = null, ButtonExecutionModes executionMode = ButtonExecutionModes.All, string tooltip = null)
         {
             ButtonLabel = buttonLabel;
             ExecutionMode = executionMode;
@@ -34,11 +34,11 @@ namespace Janito.EditorExtras
         public ButtonAttribute(string buttonLabel)
         {
             ButtonLabel = buttonLabel;
-            ExecutionMode = ButtonExecutionMode.All;
+            ExecutionMode = ButtonExecutionModes.All;
             Tooltip = string.Empty;
         }
 
-        public ButtonAttribute(ButtonExecutionMode executionMode)
+        public ButtonAttribute(ButtonExecutionModes executionMode)
         {
             ExecutionMode = executionMode;
             ButtonLabel = string.Empty;
