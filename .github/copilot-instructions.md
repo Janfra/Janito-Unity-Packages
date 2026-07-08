@@ -40,7 +40,7 @@ When files in a package folder change, use these exact abbreviated scopes to sav
 
 ### 2. Meta File Handling
 - Unity `.meta` files are critical. If a `.meta` file is part of the staging area, do not ignore it. 
-- If a commit consists *only* of adding or moving `.meta` files, use the `style` or `chore` type (e.g., `style(com.team.ui): Regenerate missing asset meta files`).
+- If a commit consists *only* of adding or moving `.meta` files, use the `style` or `chore` type (e.g., `style(proto): Regenerate missing asset meta files`).
 
 ### 3. Assembly Definitions (.asmdef)
 - If an `.asmdef` or `.asmref` file is modified, the commit type must be `chore` or `refactor`. 
@@ -48,7 +48,7 @@ When files in a package folder change, use these exact abbreviated scopes to sav
 
 ### 4. Package Manifests (package.json)
 - Updates to a package's `package.json` must use the `chore` or `release` type.
-- Always try to state the version shift if visible in the diff (e.g., `chore(com.team.core): Bump package version to 2.1.0`).
+- Always try to state the version shift if visible in the diff (e.g., `chore(editor): Bump package version to 2.1.0`).
 
 ### 5. Code Style Language
 - For changes within C# scripts, align the description verbs with Unity-centric operations where applicable (e.g., "Implement Awake cycle", "Optimize Update loop", "Expose serialized field").
