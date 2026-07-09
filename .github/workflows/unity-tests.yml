@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: 'Test - ${{ matrix.packageConfig.name }} [V: ${{ matrix.unityVersion }} - M: ${{ matrix.testMode }}]'
+    name: 'Test - ${{ matrix.packageConfig.displayName }} [V: ${{ matrix.unityVersion }} - M: ${{ matrix.testMode }}]'
     runs-on: ubuntu-latest
     
     permissions:
@@ -24,8 +24,8 @@ jobs:
           - playmode
           - editmode
         packageConfig:
-          - { path: 'JanitoEditorExtrasPackage', name: 'com.janito.editorextras' }
-          - { path: 'JanitoAnimationPackage', name: 'com.janito.animationpackage' }
+          - { path: 'JanitoEditorExtrasPackage', name: 'com.janito.editorextras', displayName: 'Editor Extras' }
+          - { path: 'JanitoAnimationPackage', name: 'com.janito.animationpackage', displayName: 'Animations' }
     
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
           fetch-depth: 0
           lfs: true
       
-      - name: Run Tests - ${{ matrix.packageConfig.name }}
+      - name: Run Tests - ${{ matrix.packageConfig.displayName }}
         uses: game-ci/unity-test-runner@v4
         id: tests
         env:
@@ -47,7 +47,7 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           artifactsPath: ${{ matrix.unityVersion }}-${{ matrix.packageConfig.name }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: ${{ matrix.testMode }}-${{ matrix.packageConfig.name }} Test Results
+          checkName: ${{ matrix.testMode }}-${{ matrix.packageConfig.displayName }} Test Results
       
       - name: Upload Test Results
         if: steps.tests.outputs.artifactsPath != ''
