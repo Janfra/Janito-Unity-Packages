@@ -33,6 +33,11 @@ namespace Janito.Animations
                 return;
             }
 
+            if (string.IsNullOrEmpty(parameterName) || string.IsNullOrWhiteSpace(parameterName))
+            {
+                throw new System.ArgumentException($"Attempting to initialise '{name}' with invalid parameter name '{parameterName}'.");
+            }
+
             m_ParameterName = parameterName;
             m_Type = type;
             m_ID = Animator.StringToHash(m_ParameterName);
