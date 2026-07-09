@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Test - ${{ matrix.packageConfig.name }} [V: ${{ matrix.unityVersion }} - M: ${{ matrix.testMode }}]
     runs-on: ubuntu-latest
     
     permissions:
@@ -22,14 +23,9 @@ jobs:
         testMode:
           - playmode
           - editmode
-        include:
-          - projectPath: JanitoEditorExtrasPackage
-            packageName: com.janito.editorextras
-          # Uncomment when tests are added:
-          # - projectPath: JanitoAnimationPackage
-          #   packageName: com.janito.animationpackage
-          # - projectPath: JanitoTimersPackage
-          #   packageName: com.janito.timerspackage
+        packageConfig:
+          - { path: 'JanitoEditorExtrasPackage', name: 'com.janito.editorextras' }
+          - { path: 'JanitoAnimationPackage', name: 'com.janito.animationpackage' }
     
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +33,7 @@ jobs:
           fetch-depth: 0
           lfs: true
       
-      - name: Run Tests - ${{ matrix.packageName }}
+      - name: Run Tests - ${{ matrix.packageConfig.name }}
         uses: game-ci/unity-test-runner@v4
         id: tests
         env:
@@ -47,15 +43,15 @@ jobs:
         with:
           packageMode: true
           testMode: ${{ matrix.testMode }} 
-          projectPath: ./${{ matrix.projectPath }}
+          projectPath: ./${{ matrix.packageConfig.path }}
           unityVersion: ${{ matrix.unityVersion }}
-          artifactsPath: ${{ matrix.unityVersion }}-${{ matrix.packageName }}-artifacts
+          artifactsPath: ${{ matrix.unityVersion }}-${{ matrix.packageConfig.name }}-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: ${{ matrix.testMode }} Test Results
+          checkName: ${{ matrix.testMode }}-${{ matrix.packageConfig.name }} Test Results
       
       - name: Upload Test Results
         if: steps.tests.outputs.artifactsPath != ''
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.unityVersion }}-${{ matrix.packageName }}
+          name: test-results-${{ matrix.unityVersion }}-${{ matrix.testMode }}-${{ matrix.packageConfig.name }}
           path: ${{ steps.tests.outputs.artifactsPath }}
