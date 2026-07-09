@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2026-07-09
+#### First Unit Tests
+
+### Added
+- **Animator Parameter Hasher Tests**: Added comprehensive test suites for `AnimatorParameterHasher` class, reducing likelihood of regression in future versions.
+
 ## [1.0.7] - 2026-05-14
 ### Fixed
 - **Hasher ID Missing**: `AnimatorParameterHasher` could sometimes be missing their `ID` on WebGL builds due to not caching the value properly. Now when `ID` is not found, it will attempt to cache the value if a valid parameter name is present.
