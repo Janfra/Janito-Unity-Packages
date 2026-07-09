@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2026-07-09
+#### Assembly Name Conflict Hotfix
+
+### Fixed
+- **Test Assembly Name**: Renamed tests runtime assembly to include package prefix to avoid conflicts in name.
+
 ## [1.0.6] - 2026-07-08
 #### Inspector Buttons
 
