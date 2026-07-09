@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Test - ${{ matrix.packageConfig.name }} [V: ${{ matrix.unityVersion }} - M: ${{ matrix.testMode }}]
+    name: 'Test - ${{ matrix.packageConfig.name }} [V: ${{ matrix.unityVersion }} - M: ${{ matrix.testMode }}]'
     runs-on: ubuntu-latest
     
     permissions:
