@@ -10,6 +10,6 @@
   "licensesUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
   "unity": "6000.1",
   "dependencies": {
-    "com.janito.editorextras": "1.0.5"
+    "com.janito.editorextras": "https://github.com/Janfra/Janito-Unity-Packages.git?path=JanitoEditorExtrasPackage#main"
   }
 }
