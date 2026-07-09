@@ -1,5 +1,5 @@
 {
-    "name": "Tests.Runtime",
+    "name": "Janito.EditorExtras.Tests.Runtime",
     "rootNamespace": "Janito.EditorExtras.Tests.Runtime",
     "references": [
         "UnityEngine.TestRunner",
