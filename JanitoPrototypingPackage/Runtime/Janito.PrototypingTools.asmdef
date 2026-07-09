@@ -1,0 +1,17 @@
+{
+    "name": "Janito.PrototypingTools",
+    "rootNamespace": "Janito.Prototyping",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:e3caa66287e2bf940b1046821593214b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
