@@ -26,7 +26,7 @@ namespace Janito.Animations.Tests.Editor
         [SetUp]
         public void CreateAnimatorControllerAndAnimatorParameterHasherUnderTest()
         {
-            _mockAnimatorController = CreateMockAnimatorController();
+            _mockAnimatorController = AnimatorTestHelpers.CreateMockAnimatorController();
             _animatorParameterHasherUnderTest = ScriptableObject.CreateInstance<AnimatorParameterHasher>();
         }
 
@@ -52,22 +52,6 @@ namespace Janito.Animations.Tests.Editor
 
             Object.DestroyImmediate(animator.gameObject);
             Assert.That(hasParameter, Is.True);
-        }
-
-
-        private AnimatorController CreateMockAnimatorController()
-        {
-            AnimatorController animatorController = new AnimatorController();
-            animatorController.name = "MockController";
-            animatorController.AddLayer("Base Layer"); // Layer is a requirement for controller to be valid.
-            return animatorController;
-        }
-
-        private AnimatorController CreateMockAnimatorControllerWithParameter(string parameterName, AnimatorControllerParameterType type)
-        {
-            AnimatorController animatorController = CreateMockAnimatorController();
-            animatorController.AddParameter(parameterName, type);
-            return animatorController;
         }
     }
 }
