@@ -25,7 +25,8 @@ jobs:
           - editmode
         packageConfig:
           - { path: 'JanitoEditorExtrasPackage', name: 'com.janito.editorextras', displayName: 'Editor Extras' }
-          - { path: 'JanitoAnimationPackage', name: 'com.janito.animationpackage', displayName: 'Animations' }
+          # TODO: Add support for Git URL package dependency 
+          # - { path: 'JanitoAnimationPackage', name: 'com.janito.animationpackage', displayName: 'Animations' }
     
     steps:
       - uses: actions/checkout@v4
