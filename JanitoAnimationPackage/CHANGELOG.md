@@ -1,9 +1,15 @@
 # Changelog
+## Unreleased
+### Changed
+- **Animator Extensions Tests**: Added test suite for `AnimatorExtensions` static class to prevent future regression.
+
+### Fixed
+- **Corrected Changelog Entry**: Moved the `AnimatorParameterHasher` tests from "Added" to "Changed".
 
 ## [1.1.0] - 2026-07-09
 #### First Unit Tests
 
-### Added
+### Changed
 - **Animator Parameter Hasher Tests**: Added comprehensive test suites for `AnimatorParameterHasher` class, reducing likelihood of regression in future versions.
 
 ## [1.0.7] - 2026-05-14
