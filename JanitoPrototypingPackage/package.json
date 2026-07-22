@@ -1,6 +1,6 @@
 {
   "name": "com.janito.prototypingpackage",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "displayName": "Janito Prototyping Package",
   "description": "Generic components and wrappers that aim to improve iteration speed without focusing on performance. It exposes additional Unity Events and classes to the editor to create quick prototypes. \n<b>WARNING: This package depends on the Janito Editor Extras package.</b>",
   "author": {
