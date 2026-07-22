@@ -251,7 +251,10 @@ namespace Janito.Prototyping.Input
         [HideInCallstack]
         private void TryLogToEditor(string message) 
         {
+            // still need to wrap otherwise builds can fail due to missing 
+            #if UNITY_EDITOR
             if (!_isLogging) return;
+            #endif
 
             this.LogWarningInDevelopment(message);
         }
