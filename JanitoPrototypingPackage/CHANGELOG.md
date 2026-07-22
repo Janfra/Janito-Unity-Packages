@@ -1,9 +1,5 @@
 # Changelog
 
-## [1.0.1] - 2026-07-22
-### Fix
-- **Missing Context**: Added guard to fix issue with missing `_isLogging` in context when creating builds.
-
 ## [1.0.0] - 2026-07-08
 #### First Release
 
