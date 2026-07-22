@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.1] - 2026-07-22
+### Fix
+- **Missing Context**: Added check to avoid `_isLogging` not existing during compilation, leading to missing context failing builds.
+
 ## [1.0.0] - 2026-07-08
 #### First Release
 
