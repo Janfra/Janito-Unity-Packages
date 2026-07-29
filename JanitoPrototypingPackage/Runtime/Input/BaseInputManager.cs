@@ -206,11 +206,6 @@ namespace Janito.Prototyping.Input
             DisposeOfRegisteredInputBroadcasters();
         }
 
-        protected virtual void OnValidate()
-        {
-            GenerateEventsForInputBroadcasters();
-        }
-
         /// <summary>
         /// Subscribes the generated events to the input system instance input action events. This is called during Awake to ensure that the events are registered with the correct input actions.
         /// </summary>
@@ -263,10 +258,15 @@ namespace Janito.Prototyping.Input
         /// <param name="actions">The array of <c>InputAction</c> instances for which to generate or update broadcasters.</param>
         private void CreateInputActionsInputBroadcasters(InputAction[] actions)
         {
-            if (actions == null || actions.Length == 0) _events = null;
+            if (actions == null || actions.Length == 0)
+            {
+                _events = null;
+                return;
+            }
 
             // Create a temporary array to check for existing events before updating
             var temp = new BaseInputBroadcaster[actions.Length];
+            bool hasNewEvents = false;
             for (int i = 0; i < actions.Length; i++)
             {
                 var action = actions[i];
@@ -275,12 +275,17 @@ namespace Janito.Prototyping.Input
                 {
                     broadcaster = GetInputBroadcasterForExpectedControlType(action);
                     broadcaster.InputActionName = action.name;
+                    hasNewEvents = true;
                 }
                 temp[i] = broadcaster;
             }
 
-            _events = new BaseInputBroadcaster[actions.Length];
-            Array.Copy(temp, _events, actions.Length);
+            // Do not update the _events array if no changes to the input actions were made to avoid unnecessary changes in the inspector
+            if (hasNewEvents || _events.Length > actions.Length)
+            {
+                _events = new BaseInputBroadcaster[actions.Length];
+                Array.Copy(temp, _events, actions.Length);
+            }
         }
 
         /// <summary>
