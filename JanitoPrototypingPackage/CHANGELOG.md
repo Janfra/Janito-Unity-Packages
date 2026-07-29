@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.2] - 2026-07-29
+### Added
+- **Automatic Event Removal**: Regenerating input action events will now remove any events that do not exist in the source `Input Action Asset`.
+
+### Change
+- **Manual Regeneration**: Changed `BaseInputManager` to not use `OnValidate` to regenerate the input events, now it must be iniatiated manually through the inspector button. This reduces unnecessary inspector updates.
+
+### Internal
+- **Skip Events Allocations**: Regenerating input action events only reallocates the events if there are new or less input actions instead of every time regeneration is triggered.
+
 ## [1.0.1] - 2026-07-22
 ### Fix
 - **Missing Context**: Added check to avoid `_isLogging` not existing during compilation, leading to missing context failing builds.
