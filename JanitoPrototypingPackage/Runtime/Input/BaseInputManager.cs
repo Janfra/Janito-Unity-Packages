@@ -280,8 +280,8 @@ namespace Janito.Prototyping.Input
                 temp[i] = broadcaster;
             }
 
-            // Do not update the _events array if no new events were generated to avoid unnecessary changes in the inspector
-            if (hasNewEvents)
+            // Do not update the _events array if no changes to the input actions were made to avoid unnecessary changes in the inspector
+            if (hasNewEvents || _events.Length > actions.Length)
             {
                 _events = new BaseInputBroadcaster[actions.Length];
                 Array.Copy(temp, _events, actions.Length);
