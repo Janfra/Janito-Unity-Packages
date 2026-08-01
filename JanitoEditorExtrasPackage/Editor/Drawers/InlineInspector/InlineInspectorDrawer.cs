@@ -10,6 +10,8 @@ namespace Janito.EditorExtras.Editor
     [CustomPropertyDrawer(typeof(InlineInspectorAttribute))]
     public class InlineInspectorDrawer : PropertyDrawer
     {
+        private const string InlineInspectorRootNamePrefix = "InlineInspectorRootFor";
+
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             VisualElement root = base.CreatePropertyGUI(property);
@@ -74,9 +76,9 @@ namespace Janito.EditorExtras.Editor
             var serialisedObject = new SerializedObject(property.objectReferenceValue);
             var GUI = UnityEditor.Editor.CreateEditor(property.objectReferenceValue).CreateInspectorGUI();
             GUI.Bind(serialisedObject);
-            foreach (var item in GUI.Children())
+            foreach (var element in GUI.Children())
             {
-                item.Bind(serialisedObject);
+                element.Bind(serialisedObject);
             }
             root.Add(GUI);
             return true;
@@ -84,7 +86,7 @@ namespace Janito.EditorExtras.Editor
 
         private string GetPropertyInlineInspectorRootName(SerializedProperty property)
         {
-            return $"InlineInspectorRootFor{property.name}";
+            return $"{InlineInspectorRootNamePrefix}{property.name}";
         }
 
         private void RemoveExistingInlineInspector(SerializedProperty property, VisualElement root)
