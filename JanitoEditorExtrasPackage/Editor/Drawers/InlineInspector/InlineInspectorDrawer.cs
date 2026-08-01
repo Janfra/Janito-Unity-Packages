@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
@@ -10,7 +7,7 @@ namespace Janito.EditorExtras.Editor
     [CustomPropertyDrawer(typeof(InlineInspectorAttribute))]
     public class InlineInspectorDrawer : PropertyDrawer
     {
-        private const string InlineInspectorRootNamePrefix = "InlineInspectorRootFor";
+        private const string m_InlineInspectorRootNamePrefix = "InlineInspectorRootFor";
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -86,7 +83,7 @@ namespace Janito.EditorExtras.Editor
 
         private string GetPropertyInlineInspectorRootName(SerializedProperty property)
         {
-            return $"{InlineInspectorRootNamePrefix}{property.name}";
+            return $"{m_InlineInspectorRootNamePrefix}{property.name}";
         }
 
         private void RemoveExistingInlineInspector(SerializedProperty property, VisualElement root)
