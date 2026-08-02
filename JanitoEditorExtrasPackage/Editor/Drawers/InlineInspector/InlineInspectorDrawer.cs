@@ -13,6 +13,7 @@ namespace Janito.EditorExtras.Editor
 
         private const string m_InlineInspectorRoorName = "InlineInspectorRoot";
         private const string m_ContainerName = "Container";
+        private InlineInspectorAttribute m_InlineInspectorAttribute => (InlineInspectorAttribute)attribute;
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -118,33 +119,40 @@ namespace Janito.EditorExtras.Editor
             }
 
             var serialisedObject = new SerializedObject(property.objectReferenceValue);
-            var GUI = UnityEditor.Editor.CreateEditor(property.objectReferenceValue).CreateInspectorGUI();
-
-            // Some elements do not have an editor, such as AnimationClips
-            if (GUI == null)
+            var editor = UnityEditor.Editor.CreateEditor(property.objectReferenceValue);
+            var container = editor.CreateInspectorGUI();
+            if (container == null)
             {
-                return false;
+                if (m_InlineInspectorAttribute.ForceInspector)
+                {
+                    container = new VisualElement();
+                    InspectorElement.FillDefaultInspector(container, serialisedObject, editor);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             // Bind GUI to properly display and update values
-            GUI.Bind(serialisedObject);
-            foreach (var element in GUI.Children())
+            container.Bind(serialisedObject);
+            foreach (var element in container.Children())
             {
                 element.Bind(serialisedObject);
             }
 
             // Setup clean up of elements on removal
-            GUI.RegisterCallback<DetachFromPanelEvent>((detachEvent) =>
+            container.RegisterCallback<DetachFromPanelEvent>((detachEvent) =>
             {
-                GUI.Unbind();
-                foreach (var element in GUI.Children())
+                container.Unbind();
+                foreach (var element in container.Children())
                 {
                     element.Unbind();
                 }
                 serialisedObject.Dispose();
             });
 
-            root.Add(GUI);
+            root.Add(container);
             return true;
         }
     }
