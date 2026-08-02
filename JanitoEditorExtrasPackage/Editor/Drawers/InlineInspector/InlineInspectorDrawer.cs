@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Janito.EditorExtras.Editor
@@ -7,58 +8,104 @@ namespace Janito.EditorExtras.Editor
     [CustomPropertyDrawer(typeof(InlineInspectorAttribute))]
     public class InlineInspectorDrawer : PropertyDrawer
     {
-        private const string m_InlineInspectorRootNamePrefix = "InlineInspectorRootFor";
+        [SerializeField]
+        private VisualTreeAsset m_DrawerAsset;
+
+        private const string m_InlineInspectorRoorName = "InlineInspectorRoot";
+        private const string m_ContainerName = "Container";
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            VisualElement root = base.CreatePropertyGUI(property);
-            if (root == null)
+            if (property.propertyType != SerializedPropertyType.ObjectReference)
             {
-                root = new VisualElement();
+                LogLibrary.LogErrorInDevelopment<InlineInspectorAttribute>($"Inline Inspector must be used on object references. Inline is not required for the property `{property.displayName}`.", property.serializedObject.targetObject);
+                return new PropertyField(property);
             }
 
-            var propertyField = new PropertyField(property);
-            root.Add(propertyField);
+            VisualElement root = m_DrawerAsset != null ? m_DrawerAsset.Instantiate() : new VisualElement();
+            PropertyField propertyField = GetPropertyField(property, root);
+
+            AddInlineInspector(property, root);
+
+            // Register a callback to handle changes in the property value
             propertyField.RegisterValueChangeCallback((changeEvent) =>
             {
-                // Ensure we are not adding new inspectors without clearing old ones first
-                RemoveExistingInlineInspector(changeEvent.changedProperty, root);
-                AddInlineInspector(changeEvent.changedProperty, root);
+                UpdateInlineInspector(changeEvent.changedProperty, root);
             });
 
-            // Add any initial inline inspector if needed
-            AddInlineInspector(property, root);
             return root;
+        }
+
+        private PropertyField GetPropertyField(SerializedProperty property, VisualElement root)
+        {
+            var propertyField = root.Q<PropertyField>();
+            if (propertyField == null)
+            {
+                propertyField = new PropertyField(property);
+                root.Add(propertyField);
+            }
+            else
+            {
+                propertyField.BindProperty(property);
+            }
+
+            propertyField.RegisterCallback<DetachFromPanelEvent>((detachEvent) =>
+            {
+                propertyField.Unbind();
+            });
+
+            return propertyField;
+        }
+
+        private void UpdateInlineInspector(SerializedProperty property, VisualElement root)
+        {
+            var container = root.Q<Foldout>(m_ContainerName);
+            if (container == null)
+            {
+                LogLibrary.LogErrorInDevelopment<InlineInspectorAttribute>($"Inline Inspector container not found for property `{property.displayName}` in {property.serializedObject.targetObject.name}. Ensure that the property is correctly set up. Otherwise, report this issue.", property.serializedObject.targetObject);
+                return;
+            }
+
+            container.Clear();
+            AddInlineInspectorContents(property, container);
         }
 
         private void AddInlineInspector(SerializedProperty property, VisualElement root)
         {
-            if (property.propertyType != SerializedPropertyType.ObjectReference)
+            Foldout container = root.Q<Foldout>(m_ContainerName);
+            if (container == null)
             {
-                LogLibrary.LogErrorInDevelopment<InlineInspectorAttribute>($"Inline Inspector must be used on object references. Inline is not required for {property.name}.");
-                return;
+                container = new Foldout();
+                container.name = m_ContainerName;
+                container.text = "Inline Inspector";
+                root.Add(container);    
             }
 
-            var foldout = new Foldout();
-            foldout.name = GetPropertyInlineInspectorRootName(property);
+            AddInlineInspectorContents(property, container);
+        }
+
+        private void AddInlineInspectorContents(SerializedProperty property, Foldout container)
+        {
             if (property.isArray)
             {
                 for (int i = 0; i < property.arraySize; i++)
                 {
                     var arrayElement = property.GetArrayElementAtIndex(i);
-                    if (!TryAddInspector(arrayElement, foldout))
+                    if (!TryAddInspector(arrayElement, container))
                     {
                         continue;
                     }
                 }
-
-                root.Add(foldout);
             }
             else
             {
-                if (TryAddInspector(property, foldout))
+                if (!TryAddInspector(property, container))
                 {
-                    root.Add(foldout);
+                    container.SetEnabled(false);
+                }
+                else
+                {
+                    container.SetEnabled(true);
                 }
             }
         }
@@ -72,27 +119,33 @@ namespace Janito.EditorExtras.Editor
 
             var serialisedObject = new SerializedObject(property.objectReferenceValue);
             var GUI = UnityEditor.Editor.CreateEditor(property.objectReferenceValue).CreateInspectorGUI();
+
+            // Some elements do not have an editor, such as AnimationClips
+            if (GUI == null)
+            {
+                return false;
+            }
+
+            // Bind GUI to properly display and update values
             GUI.Bind(serialisedObject);
             foreach (var element in GUI.Children())
             {
                 element.Bind(serialisedObject);
             }
+
+            // Setup clean up of elements on removal
+            GUI.RegisterCallback<DetachFromPanelEvent>((detachEvent) =>
+            {
+                GUI.Unbind();
+                foreach (var element in GUI.Children())
+                {
+                    element.Unbind();
+                }
+                serialisedObject.Dispose();
+            });
+
             root.Add(GUI);
             return true;
-        }
-
-        private string GetPropertyInlineInspectorRootName(SerializedProperty property)
-        {
-            return $"{m_InlineInspectorRootNamePrefix}{property.name}";
-        }
-
-        private void RemoveExistingInlineInspector(SerializedProperty property, VisualElement root)
-        {
-            var element = root.Q(GetPropertyInlineInspectorRootName(property));
-            if (element != null)
-            {
-                root.Remove(element);
-            }
         }
     }
 }
