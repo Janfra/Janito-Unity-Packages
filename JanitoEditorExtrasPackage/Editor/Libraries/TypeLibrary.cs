@@ -34,12 +34,26 @@ namespace Janito.EditorExtras.Editor
             return childrenTypes;
         }
 
+        /// <summary>
+        /// Returns a list of child types of the requested type, filtered by the provided eligibility criteria and optionally sorted by name.
+        /// </summary>
+        /// <typeparam name="T">The type to find child types for</typeparam>
+        /// <param name="elegibilityCriteria">Criteria to filter the child types</param>
+        /// <param name="sortedByName">Whether to sort the resulting list by name</param>
+        /// <returns>A list of child types that meet the criteria</returns>
         public static IEnumerable<Type> GetChildTypes<T>(TypeCriteria elegibilityCriteria = new(), bool sortedByName = false)
         {
             Type requestedType = typeof(T);
             return GetChildTypes(requestedType, elegibilityCriteria, sortedByName);
         }
 
+        /// <summary>
+        /// Returns a list of child types of the requested type, filtered by the provided eligibility criteria and optionally sorted by name.
+        /// </summary>
+        /// <param name="requestedType">The type to find child types for</param>
+        /// <param name="elegibilityCriteria">Criteria to filter the child types</param>
+        /// <param name="sortedByName">Whether to sort the resulting list by name</param>
+        /// <returns>A list of child types that meet the criteria</returns>
         public static IEnumerable<Type> GetChildTypes(Type requestedType, TypeCriteria elegibilityCriteria = new(), bool sortedByName = false)
         {
             var typeCollection = TypeCache.GetTypesDerivedFrom(requestedType);
@@ -56,6 +70,30 @@ namespace Janito.EditorExtras.Editor
             }
 
             return validTypes;
+        }
+
+        /// <summary>
+        /// Returns the type of a field info, handling arrays and generic types.
+        /// </summary>
+        /// <param name="fieldInfo">Field info to extract the type from</param>
+        /// <returns>The type of the field info</returns>
+        public static Type GetFieldType(FieldInfo fieldInfo)
+        {
+            if (fieldInfo == null) return null;
+            var type = fieldInfo.FieldType;
+            if (type.IsArray)
+            {
+                type = type.GetElementType();
+            }
+            else if (type.IsGenericType)
+            {
+                var genericType = type.GetGenericTypeDefinition();
+                if (genericType == typeof(IList<>) || genericType == typeof(ICollection<>) || genericType == typeof(IEnumerable<>))
+                {
+                    type = type.GetGenericArguments()[0];
+                }
+            }
+            return type;
         }
 
         private static int SortTypeByName(Type a, Type b)
