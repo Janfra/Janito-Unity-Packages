@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.0] - 2026-08-02
+### Added
+- **Inline Inspector Attribute**: Added `InlineInspectorAttribute` to display referenced object properties inline, eliminating the need to switch in between inspected objects.
+
 ## [1.0.7] - 2026-07-09
 #### Assembly Name Conflict Hotfix
 
