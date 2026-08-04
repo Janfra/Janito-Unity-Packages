@@ -5,11 +5,6 @@ namespace Janito.EditorExtras.EventChannel
 {
     public abstract class EventChannelListener<T1> : MonoBehaviour
     {
-#if UNITY_EDITOR
-        [SerializeField]
-        private string m_DeveloperDescription = $"This is a {typeof(T1)} event channel. It can be used to raise events with one parameter of type {typeof(T1)}.";
-#endif
-
         [SerializeField]
         private EventChannelSO<T1> m_Channel = default;
 
@@ -39,11 +34,6 @@ namespace Janito.EditorExtras.EventChannel
 
     public abstract class EventChannelListener<T1, T2> : MonoBehaviour
     {
-#if UNITY_EDITOR
-        [SerializeField]
-        private string m_DeveloperDescription = $"This is a {typeof(T1)}, {typeof(T2)} event channel. It can be used to raise events with two parameters of type {typeof(T1)}, {typeof(T2)}.";
-#endif
-
         [SerializeField]
         private EventChannelSO<T1, T2> m_Channel = default;
 
@@ -73,11 +63,6 @@ namespace Janito.EditorExtras.EventChannel
 
     public abstract class EventChannelListener<T1, T2, T3> : MonoBehaviour
     {
-#if UNITY_EDITOR
-        [SerializeField]
-        private string m_DeveloperDescription = $"This is a {typeof(T1)}, {typeof(T2)}, {typeof(T3)} event channel. It can be used to raise events with three parameters of type {typeof(T1)}, {typeof(T2)}, {typeof(T3)}.";
-#endif
-
         [SerializeField]
         private EventChannelSO<T1, T2, T3> m_Channel = default;
 
