@@ -9,9 +9,11 @@ namespace Janito.EditorExtras.EventChannel
     {
 #if UNITY_EDITOR
         [Header("Developement Only")]
+#pragma warning disable CS0414
         [SerializeField]
         [TextArea]
         private string m_DeveloperDescription = "This is a void event channel. It can be used to raise events without any parameters.";
+#pragma warning restore CS0414
 
         [Space]
         [SerializeField]

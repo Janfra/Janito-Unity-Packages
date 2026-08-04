@@ -8,9 +8,11 @@ namespace Janito.EditorExtras.EventChannel
     {
 #if UNITY_EDITOR
         [Header("Developement Only")]
+#pragma warning disable CS0414
         [SerializeField]
         [TextArea]
         private string m_DeveloperDescription = $"This is a {typeof(T1)} event channel. It can be used to raise events with one parameter of type {typeof(T1)}.";
+#pragma warning restore CS0414
 
         [Space]
         [SerializeField]
@@ -57,9 +59,11 @@ namespace Janito.EditorExtras.EventChannel
     {
 #if UNITY_EDITOR
         [Header("Developement Only")]
+#pragma warning disable CS0414
         [SerializeField]
         [TextArea]
         private string m_DeveloperDescription = $"This is a {typeof(T1)}, {typeof(T2)} event channel. It can be used to raise events with two parameters of type {typeof(T1)}, {typeof(T2)}.";
+#pragma warning restore CS0414
 
         [Space]
         [SerializeField]
@@ -105,9 +109,11 @@ namespace Janito.EditorExtras.EventChannel
     {
 #if UNITY_EDITOR
         [Header("Developement Only")]
+#pragma warning disable CS0414
         [SerializeField]
         [TextArea]
         private string m_DeveloperDescription = $"This is a {typeof(T1)}, {typeof(T2)}, {typeof(T3)} event channel. It can be used to raise events with three parameters of type {typeof(T1)}, {typeof(T2)}, {typeof(T3)}.";
+#pragma warning restore CS0414
 
         [Space]
         [SerializeField]
