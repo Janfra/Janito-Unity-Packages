@@ -1,8 +1,13 @@
 # Changelog
 
+## [Unreleased] - 2026-08-04
+### Changed
+- **Improve Default Button Label**: Changed default button label to format the method name to insert spaces before capital letters and remove optional `m_`, `_` or `k` followed by uppercase letter in front of the name. 
+    - *Note: For more information see `ObjectNames.NicifyVariableName` in Unity documentation.*
+
 ## [1.1.0] - 2026-08-02
 ### Added
-- **Inline Inspector Attribute**: Added `InlineInspectorAttribute` to display referenced object properties inline, eliminating the need to switch in between inspected objects.
+- **Inline Inspector Attribute**: Added `InlineInspectorAttribute` to display referenced object properties inline, eliminating the need to switch between inspected objects.
 
 ## [1.0.7] - 2026-07-09
 #### Assembly Name Conflict Hotfix
