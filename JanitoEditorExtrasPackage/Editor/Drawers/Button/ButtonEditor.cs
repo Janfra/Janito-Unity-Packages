@@ -93,7 +93,7 @@ namespace Janito.EditorExtras.Editor
                 }
             })
             {
-                text = string.IsNullOrEmpty(buttonAttribute.ButtonLabel) ? method.Name : buttonAttribute.ButtonLabel,
+                text = string.IsNullOrEmpty(buttonAttribute.ButtonLabel) ? ObjectNames.NicifyVariableName(method.Name) : buttonAttribute.ButtonLabel,
                 tooltip = buttonAttribute.Tooltip
             };
 
