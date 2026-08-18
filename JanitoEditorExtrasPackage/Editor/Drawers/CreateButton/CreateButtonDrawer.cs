@@ -20,6 +20,12 @@ namespace Janito.EditorExtras.Editor
                 return field;
             }
 
+            if (fieldType.IsAbstract || fieldType.IsInterface)
+            {
+                LogLibrary.LogErrorInDevelopment<CreateButtonAttribute>($"CreateButtonAttribute cannot be used on abstract classes or interfaces. Field '{property.displayName}' is not compatible.", property.serializedObject.targetObject);
+                return field;
+            }
+
             var container = new VisualElement();
             SetContainerStyle(container);
             SetFieldStyle(field);
