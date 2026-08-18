@@ -73,24 +73,40 @@ namespace Janito.EditorExtras.Editor
         }
 
         /// <summary>
-        /// Returns the type of a field info, handling arrays and generic types.
+        /// Returns the main type, stripping away array or standard generic collection wrappers if present.
         /// </summary>
-        /// <param name="fieldInfo">Field info to extract the type from</param>
-        /// <returns>The type of the field info</returns>
-        public static Type GetFieldType(FieldInfo fieldInfo)
+        /// <param name="type">The type to extract the core type from</param>
+        /// <returns>The element type for arrays and generic collections, otherwise the original type</returns>
+        public static Type GetCoreType(this Type type)
         {
-            if (fieldInfo == null) return null;
-            var type = fieldInfo.FieldType;
+            if (type == null) return null;
+
             if (type.IsArray)
             {
-                type = type.GetElementType();
+                return type.GetElementType();
             }
             else if (type.IsGenericType)
             {
-                var genericType = type.GetGenericTypeDefinition();
-                if (genericType == typeof(IList<>) || genericType == typeof(ICollection<>) || genericType == typeof(IEnumerable<>))
+                // Handle type is one of target interfaces
+                var genericDefinition = type.GetGenericTypeDefinition();
+                if (genericDefinition == typeof(IList<>) ||
+                    genericDefinition == typeof(ICollection<>) ||
+                    genericDefinition == typeof(IEnumerable<>))
                 {
-                    type = type.GetGenericArguments()[0];
+                    return type.GetGenericArguments()[0];
+                }
+
+                // Handle classes implementing the target interfaces
+                var collectionInterface = type.GetInterfaces()
+                    .FirstOrDefault(x => x.IsGenericType && (
+                        x.GetGenericTypeDefinition() == typeof(IList<>) ||
+                        x.GetGenericTypeDefinition() == typeof(ICollection<>) ||
+                        x.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+                    ));
+
+                if (collectionInterface != null)
+                {
+                    return type.GetGenericArguments()[0];
                 }
             }
             return type;
