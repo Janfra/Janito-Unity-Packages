@@ -1,11 +1,7 @@
-using System;
-using System.Reflection;
-using System.Text;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
 
 namespace Janito.EditorExtras.Editor
 {
@@ -13,8 +9,7 @@ namespace Janito.EditorExtras.Editor
     public class CreateButtonDrawer : PropertyDrawer
     {
         private CreateButtonAttribute m_CreateButtonAttribute => (CreateButtonAttribute)attribute;
-        private const string k_DefaultNullFieldFallbackName = "Null";
-        private const BindingFlags k_FieldBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+        private const string k_DefaultNullValueFallbackName = "Null";
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -68,10 +63,10 @@ namespace Janito.EditorExtras.Editor
 
         private Button AddCreateButton(VisualElement container, SerializedProperty property)
         {
-            var createButton = new Button(() => CreateAsset(property))
+            var createButton = new Button(() => TryCreateAsset(property))
             {
                 text = "Create",
-                tooltip = $"Create a new {fieldInfo.FieldType.Name} asset and assign it to this field.",
+                tooltip = $"Create a new {ObjectNames.NicifyVariableName(fieldInfo.FieldType.GetCoreType().Name)} asset and assign it to this field.",
             };
 
             container.Add(createButton);
@@ -91,14 +86,22 @@ namespace Janito.EditorExtras.Editor
             }
         }
 
-        private void CreateAsset(SerializedProperty property)
+        private void TryCreateAsset(SerializedProperty property)
         {
+            var savePath = GetDefaultSavePath();
+
+            // Prompt folder creation if missing
+            if (!AssetDatabase.IsValidFolder(savePath))
+            {
+                TryCreateSaveFolder(savePath);
+            }
+
             string destinationPath = EditorUtility.SaveFilePanelInProject(
                 "Create New Asset",
                 GetDefaultName(property.serializedObject.targetObject),
                 "asset",
                 "Save Location",
-                GetDefaultSavePath()
+                savePath
                 );
 
             if (string.IsNullOrEmpty(destinationPath))
@@ -106,12 +109,22 @@ namespace Janito.EditorExtras.Editor
                 return;
             }
 
-            var fieldType = fieldInfo.FieldType.GetCoreType();
-            var asset = ScriptableObject.CreateInstance(fieldType);
-            AssetDatabase.CreateAsset(asset, destinationPath);
-            AssetDatabase.SaveAssets();
-            property.objectReferenceValue = asset;
-            property.serializedObject.ApplyModifiedProperties();
+            CreateAsset(destinationPath, property);
+        }
+
+        private void TryCreateSaveFolder(string folderPath)
+        {
+            bool shouldCreateFolder = EditorUtility.DisplayDialog(
+            "Missing Target Directory",
+            $"The assigned default save folder does not exist: \n\n{folderPath}",
+            "Create Folder",
+            "Continue Without Folder"
+            );
+
+            if (shouldCreateFolder)
+            {
+                PathLibrary.CreateFolderInProject(folderPath);
+            }
         }
 
         private string GetDefaultName(Object parent)
@@ -122,83 +135,38 @@ namespace Janito.EditorExtras.Editor
             }
             else
             {
-                return FormatPathWithObjectFieldInfo(m_CreateButtonAttribute.NamingFormat, parent);
+                return FormatPathWithObjectTypeInfo(m_CreateButtonAttribute.NamingFormat, parent);
             }
         }
 
-        private string FormatPathWithObjectFieldInfo(string format, object fieldSource)
+        private string FormatPathWithObjectTypeInfo(string format, Object typeInstance)
         {
-            int bufferSize = 32;
-            int length = format.Length;
-            StringBuilder sb = new StringBuilder(length + bufferSize);
-            int index = 0;
-
-            while (index < length)
-            {
-                int openBraceIndex = format.IndexOf('{', index);
-
-                // If no more placeholders are found, append the rest of the string and break
-                if (openBraceIndex == -1)
-                {
-                    sb.Append(format, index, length - index);
-                    break;
-                }
-
-                // Append the text before the placeholder
-                if (openBraceIndex > index)
-                {
-                    sb.Append(format, index, openBraceIndex - index);
-                }
-
-                int closeBraceIndex = format.IndexOf('}', openBraceIndex);
-                if (closeBraceIndex == -1)
-                {
-                    // If there's no closing brace, treat it as a literal '{'. Maybe add a warning here in the future.
-                    sb.Append(format, openBraceIndex, length - openBraceIndex);
-                    break;
-                }
-
-                string fieldName = format.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
-
-                // Try to fill in the placeholder with the actual field value if found, otherwise treat it as a literal
-                Type fieldType = fieldSource.GetType();
-                FieldInfo field = fieldType.GetField(fieldName, k_FieldBindingFlags);
-                object value = null;
-                if (field != null)
-                {
-                    value = field.GetValue(fieldSource);
-                    sb.Append(value != null ? value.ToString() : k_DefaultNullFieldFallbackName);
-                }
-                else
-                {
-                    PropertyInfo property = fieldType.GetProperty(fieldName, k_FieldBindingFlags);
-                    if (property != null && property.CanRead)
-                    {
-                        value = property.GetValue(fieldSource);
-                        sb.Append(value != null ? value.ToString() : k_DefaultNullFieldFallbackName);
-                    }
-                    else
-                    {
-                        sb.Append(format, openBraceIndex, closeBraceIndex - openBraceIndex + 1);
-                    }
-                }
-
-                index = closeBraceIndex + 1;
-            }
+            var formattedName = format.FormatWithTypeInfo(typeInstance, k_DefaultNullValueFallbackName);
 
             // Sanitise path
             char[] invalidChars = System.IO.Path.GetInvalidFileNameChars();
             foreach (char invalidChar in invalidChars)
             {
-                sb.Replace(invalidChar.ToString(), "");
+                formattedName.Replace(invalidChar.ToString(), "");
             }
 
-            return sb.ToString();
+            return formattedName;
         }
 
         private string GetDefaultSavePath()
         {
             return string.IsNullOrEmpty(m_CreateButtonAttribute.SavePath) ? CreateButtonAttribute.k_DefaultSavePath : m_CreateButtonAttribute.SavePath;
+        }
+
+        private void CreateAsset(string destinationPath, SerializedProperty property)
+        {
+            var fieldType = fieldInfo.FieldType.GetCoreType();
+            var asset = ScriptableObject.CreateInstance(fieldType);
+            AssetDatabase.CreateAsset(asset, destinationPath);
+            AssetDatabase.SaveAssets();
+            property.objectReferenceValue = asset;
+            property.serializedObject.ApplyModifiedProperties();
+            EditorGUIUtility.PingObject(asset);
         }
     }
 }

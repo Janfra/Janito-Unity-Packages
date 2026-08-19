@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using UnityEditor;
 
 namespace Janito.EditorExtras.Editor
@@ -110,6 +111,90 @@ namespace Janito.EditorExtras.Editor
                 }
             }
             return type;
+        }
+
+        public static string FormatWithTypeInfo<T>(this string format, T typeInstance, string nullFallback = "Null", int bufferSize = 32) 
+            where T : class
+        {
+            Type type = typeof(T);
+            return FormatWithTypeInfo(type, format, typeInstance, nullFallback, bufferSize);
+        }
+
+        public static string FormatWithTypeInfo(this Type type, string format, object typeInstance, string nullFallback = "Null", int bufferSize = 32)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type), "Type cannot be null.");
+            }
+
+            if (typeInstance == null)
+            {
+                throw new ArgumentNullException(nameof(typeInstance), "Type instance cannot be null.");
+            }
+
+            if (!type.IsAssignableFrom(typeInstance.GetType()))
+            {
+                throw new ArgumentException($"The provided type instance is of type '{typeInstance.GetType().FullName}' and is not assignable to the specified type '{type.FullName}'.", nameof(typeInstance));
+            }
+
+            const BindingFlags k_searchBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+            int length = format.Length;
+            StringBuilder sb = new StringBuilder(length + bufferSize);
+            int index = 0;
+
+            while (index < length)
+            {
+                int openBraceIndex = format.IndexOf('{', index);
+
+                // If no more placeholders are found, append the rest of the string and break
+                if (openBraceIndex == -1)
+                {
+                    sb.Append(format, index, length - index);
+                    break;
+                }
+
+                // Append the text before the placeholder
+                if (openBraceIndex > index)
+                {
+                    sb.Append(format, index, openBraceIndex - index);
+                }
+
+                int closeBraceIndex = format.IndexOf('}', openBraceIndex);
+                if (closeBraceIndex == -1)
+                {
+                    // If there's no closing brace, treat it as a literal '{'. Maybe add a warning here in the future.
+                    sb.Append(format, openBraceIndex, length - openBraceIndex);
+                    break;
+                }
+
+                string fieldName = format.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
+
+                // Try to fill in the placeholder with the actual field value if found, otherwise treat it as a literal
+                FieldInfo field = type.GetField(fieldName, k_searchBindingFlags);
+                object value = null;
+                if (field != null)
+                {
+                    value = field.GetValue(typeInstance);
+                    sb.Append(value != null ? value.ToString() : nullFallback);
+                }
+                else
+                {
+                    PropertyInfo property = type.GetProperty(fieldName, k_searchBindingFlags);
+                    if (property != null && property.CanRead)
+                    {
+                        value = property.GetValue(typeInstance);
+                        sb.Append(value != null ? value.ToString() : nullFallback);
+                    }
+                    else
+                    {
+                        sb.Append(format, openBraceIndex, closeBraceIndex - openBraceIndex + 1);
+                    }
+                }
+
+                index = closeBraceIndex + 1;
+            }
+            
+            return sb.ToString();
         }
 
         private static int SortTypeByName(Type a, Type b)

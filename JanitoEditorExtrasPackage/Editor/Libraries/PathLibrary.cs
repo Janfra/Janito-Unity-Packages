@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace Janito.EditorExtras.Editor
 {
     public static class PathLibrary
     {
+        public const string k_EditorProjectAssetsRoot = "Assets";
+
         /// <summary>
         /// Opens a folder selection window to the user, returns the selected path if it is within the project assets folder
         /// </summary>
@@ -85,6 +88,31 @@ namespace Janito.EditorExtras.Editor
             {
                 Directory.CreateDirectory(absolutePath);
                 AssetDatabase.Refresh();
+            }
+        }
+
+        public static void CreateFolderInProject(string relativePath)
+        {
+            if (!relativePath.StartsWith(k_EditorProjectAssetsRoot))
+            {
+                throw new ArgumentException(message: $"Relative path must be rooted at '{k_EditorProjectAssetsRoot}' location in order to be able to create a folder in project.");
+            }
+
+            string[] folders = relativePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            string parentFolder = k_EditorProjectAssetsRoot; // We assume it is at the root already as required and skip the first folder
+            for (int i = 1; i < folders.Length; i++)
+            {
+                string folder = folders[i];
+                if (string.IsNullOrWhiteSpace(folder) || string.IsNullOrEmpty(folder))
+                {
+                    continue;
+                }
+
+                string currentFolder = Path.Combine(parentFolder, folder);
+                if (!AssetDatabase.IsValidFolder(currentFolder))
+                {
+                    AssetDatabase.CreateFolder(parentFolder, folder);
+                }
             }
         }
     }
