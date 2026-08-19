@@ -1,3 +1,5 @@
+using System.Reflection;
+using System.Text;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -9,6 +11,8 @@ namespace Janito.EditorExtras.Editor
     public class CreateButtonDrawer : PropertyDrawer
     {
         private CreateButtonAttribute m_CreateButtonAttribute => (CreateButtonAttribute)attribute;
+        private const string k_DefaultNullFieldFallbackName = "Null";
+        private const BindingFlags k_FieldBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -87,12 +91,12 @@ namespace Janito.EditorExtras.Editor
 
         private void CreateAsset(SerializedProperty property)
         {
-            var fieldType = fieldInfo.FieldType.GetCoreType();
             string destinationPath = EditorUtility.SaveFilePanelInProject(
                 "Create New Asset",
-                $"New {fieldType.Name}", 
-                "asset", 
-                "Save Location"
+                GetDefaultName(property.serializedObject.targetObject),
+                "asset",
+                "Save Location",
+                GetDefaultSavePath()
                 );
 
             if (string.IsNullOrEmpty(destinationPath))
@@ -100,11 +104,88 @@ namespace Janito.EditorExtras.Editor
                 return;
             }
 
+            var fieldType = fieldInfo.FieldType.GetCoreType();
             var asset = ScriptableObject.CreateInstance(fieldType);
             AssetDatabase.CreateAsset(asset, destinationPath);
             AssetDatabase.SaveAssets();
             property.objectReferenceValue = asset;
             property.serializedObject.ApplyModifiedProperties();
+        }
+
+        private string GetDefaultName(Object parent)
+        {
+            if (string.IsNullOrEmpty(m_CreateButtonAttribute.NamingFormat))
+            {
+                return $"New {fieldInfo.FieldType.GetCoreType().Name}";
+            }
+            else
+            {
+                return FormatPathWithObjectFieldInfo(m_CreateButtonAttribute.NamingFormat, parent);
+            }
+        }
+
+        private string FormatPathWithObjectFieldInfo(string format, object fieldSource)
+        {
+            int bufferSize = 32;
+            int length = format.Length;
+            StringBuilder sb = new StringBuilder(length + bufferSize);
+            int index = 0;
+
+            while (index < length)
+            {
+                int openBraceIndex = format.IndexOf('{', index);
+
+                // If no more placeholders are found, append the rest of the string and break
+                if (openBraceIndex == -1)
+                {
+                    sb.Append(format, index, length - index);
+                    break;
+                }
+
+                // Append the text before the placeholder
+                if (openBraceIndex > index)
+                {
+                    sb.Append(format, index, openBraceIndex - index);
+                }
+
+                int closeBraceIndex = format.IndexOf('}', openBraceIndex);
+                if (closeBraceIndex == -1)
+                {
+                    // If there's no closing brace, treat it as a literal '{'. Maybe add a warning here in the future.
+                    sb.Append(format, openBraceIndex, length - openBraceIndex);
+                    break;
+                }
+
+                string fieldName = format.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
+
+                // Try to fill in the placeholder with the actual field name if it matches, otherwise treat it as a literal
+                FieldInfo field = fieldSource.GetType().GetField(fieldName, k_FieldBindingFlags);
+                if (field != null)
+                {
+                    object value = field.GetValue(fieldSource);
+                    sb.Append(value != null ? value.ToString() : k_DefaultNullFieldFallbackName);
+                }
+                else
+                {
+                    sb.Append(format, openBraceIndex, closeBraceIndex - openBraceIndex + 1);
+                }
+
+                index = closeBraceIndex + 1;
+            }
+
+            // Sanitise path
+            char[] invalidChars = System.IO.Path.GetInvalidFileNameChars();
+            foreach (char invalidChar in invalidChars)
+            {
+                sb.Replace(invalidChar.ToString(), "");
+            }
+
+            return sb.ToString();
+        }
+
+        private string GetDefaultSavePath()
+        {
+            return string.IsNullOrEmpty(m_CreateButtonAttribute.SavePath) ? CreateButtonAttribute.k_DefaultSavePath : m_CreateButtonAttribute.SavePath;
         }
     }
 }
