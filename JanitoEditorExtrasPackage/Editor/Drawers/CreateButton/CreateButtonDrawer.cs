@@ -1,9 +1,11 @@
+using System;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace Janito.EditorExtras.Editor
 {
@@ -158,16 +160,27 @@ namespace Janito.EditorExtras.Editor
 
                 string fieldName = format.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
 
-                // Try to fill in the placeholder with the actual field name if it matches, otherwise treat it as a literal
-                FieldInfo field = fieldSource.GetType().GetField(fieldName, k_FieldBindingFlags);
+                // Try to fill in the placeholder with the actual field value if found, otherwise treat it as a literal
+                Type fieldType = fieldSource.GetType();
+                FieldInfo field = fieldType.GetField(fieldName, k_FieldBindingFlags);
+                object value = null;
                 if (field != null)
                 {
-                    object value = field.GetValue(fieldSource);
+                    value = field.GetValue(fieldSource);
                     sb.Append(value != null ? value.ToString() : k_DefaultNullFieldFallbackName);
                 }
                 else
                 {
-                    sb.Append(format, openBraceIndex, closeBraceIndex - openBraceIndex + 1);
+                    PropertyInfo property = fieldType.GetProperty(fieldName, k_FieldBindingFlags);
+                    if (property != null && property.CanRead)
+                    {
+                        value = property.GetValue(fieldSource);
+                        sb.Append(value != null ? value.ToString() : k_DefaultNullFieldFallbackName);
+                    }
+                    else
+                    {
+                        sb.Append(format, openBraceIndex, closeBraceIndex - openBraceIndex + 1);
+                    }
                 }
 
                 index = closeBraceIndex + 1;
