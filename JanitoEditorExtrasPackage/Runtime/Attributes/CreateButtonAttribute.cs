@@ -21,8 +21,8 @@ namespace Janito.EditorExtras
             }
             else if(!savePath.StartsWith(k_DefaultSavePath))
             {
-                LogLibrary.LogWarningInDevelopment<CreateButtonAttribute>($"Create Button save path must start with '{k_DefaultSavePath}' as the root. Provided save path: {savePath}");
-                savePath = $"{k_DefaultSavePath}/{savePath}";
+                LogLibrary.LogWarningInDevelopment<CreateButtonAttribute>($"Create Button save path must start with '{k_DefaultSavePath}' as the root. Using default path instead. Provided save path: {savePath}");
+                savePath = k_DefaultSavePath;
             }
 
             NamingFormat = namingFormat;
