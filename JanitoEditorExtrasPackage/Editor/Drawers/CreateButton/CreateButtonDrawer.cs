@@ -13,7 +13,7 @@ namespace Janito.EditorExtras.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var field = new PropertyField(property);
-            var fieldType = fieldInfo.FieldType.GetCoreType(); // Handle lists and arrays, assuming that the property returns the items inside the list/array instead of itself.
+            var fieldType = fieldInfo.FieldType.GetCoreType(); // Handle lists and array, we assume that the property returns the items inside the list/array instead of the collection itself, so we just need to confirm the type
             if (property.propertyType != SerializedPropertyType.ObjectReference || !typeof(ScriptableObject).IsAssignableFrom(fieldType))
             {
                 LogLibrary.LogErrorInDevelopment<CreateButtonAttribute>($"CreateButtonAttribute can only be used on `ScriptableObject` types. Field '{property.displayName}' is of type '{fieldType.Name}'.", property.serializedObject.targetObject);
