@@ -1,0 +1,33 @@
+{
+  "include-component-in-tag": true,
+  "include-v-in-tag": true,
+  "tag-separator": "@",
+  "separate-pull-requests": true,
+  "packages": {
+    "editor": {
+      "path": "JanitoEditorExtrasPackage",
+      "release-type": "simple",
+      "version-file": "package.json",
+      "last-release-sha": "00801b3fe0409f13ed88c0a503338a11e577c281"
+    },
+    "animation": {
+      "path": "JanitoAnimationPackage",
+      "release-type": "simple",
+      "version-file": "package.json",
+      "last-release-sha": "3b9b222635760ec52fdf7d006fa02c89c8aaf19b"
+    },
+    "proto": {
+      "path": "JanitoPrototypingPackage",
+      "release-type": "simple",
+      "version-file": "package.json",
+      "last-release-sha": "a0ab782b1f6fac3f7054549159b83b6dc3d6263d"
+    },
+    "timers": {
+      "path": "JanitoTimersPackage",
+      "release-type": "simple",
+      "version-file": "package.json",
+      "last-release-sha": "3b9b222635760ec52fdf7d006fa02c89c8aaf19b"
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
