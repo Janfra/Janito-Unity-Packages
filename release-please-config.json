@@ -10,23 +10,19 @@
   "packages": {
     "JanitoEditorExtrasPackage": {
       "package-name": "editor",
-      "release-type": "simple",
-      "version-file": "package.json"
+      "release-type": "simple"
     },
     "JanitoAnimationPackage": {
       "package-name": "animation",
-      "release-type": "simple",
-      "version-file": "package.json"
+      "release-type": "simple"
     },
     "JanitoPrototypingPackage": {
       "package-name": "proto",
-      "release-type": "simple",
-      "version-file": "package.json"
+      "release-type": "simple"
     },
     "JanitoTimersPackage": {
       "package-name": "timers",
-      "release-type": "simple",
-      "version-file": "package.json"
+      "release-type": "simple"
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
