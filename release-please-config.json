@@ -1,0 +1,25 @@
+{
+  "include-component-in-tag": true,
+  "include-v-in-tag": true,
+  "tag-separator": "@",
+  "separate-pull-requests": true,
+  "packages": {
+    "editor-extras": {
+      "path": "JanitoEditorExtrasPackage",
+      "release-type": "node"
+    },
+    "animation": {
+      "path": "JanitoAnimationPackage",
+      "release-type": "node"
+    },
+    "prototyping": {
+      "path": "JanitoPrototypingPackage",
+      "release-type": "node"
+    },
+    "timers": {
+      "path": "JanitoTimersPackage",
+      "release-type": "node"
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
