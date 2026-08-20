@@ -113,6 +113,15 @@ namespace Janito.EditorExtras.Editor
             return type;
         }
 
+        /// <summary>
+        /// Formats string utilising matching reflection values from type <c>T</c>, retrieving instanced values from the provided <c>typeInstance</c> argument.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="format"></param>
+        /// <param name="typeInstance"></param>
+        /// <param name="nullFallback"></param>
+        /// <param name="bufferSize"></param>
+        /// <returns>Formatted string, replacing any matching values</returns>
         public static string FormatWithTypeInfo<T>(this string format, T typeInstance, string nullFallback = "Null", int bufferSize = 32) 
             where T : class
         {
@@ -120,6 +129,17 @@ namespace Janito.EditorExtras.Editor
             return FormatWithTypeInfo(type, format, typeInstance, nullFallback, bufferSize);
         }
 
+        /// <summary>
+        /// Formats string utilising matching reflection values from <c>type</c>, retrieving instanced values from the provided <c>typeInstance</c> argument.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="format"></param>
+        /// <param name="typeInstance"></param>
+        /// <param name="nullFallback"></param>
+        /// <param name="bufferSize"></param>
+        /// <returns>Formatted string, replacing any matching values</returns>
+        /// <exception cref="ArgumentNullException"><c>type</c> or <c>typeInstance</c> arguments are null</exception>
+        /// <exception cref="ArgumentException"><c>typeInstance</c> is not of type <c>type</c></exception>
         public static string FormatWithTypeInfo(this Type type, string format, object typeInstance, string nullFallback = "Null", int bufferSize = 32)
         {
             if (type == null)
