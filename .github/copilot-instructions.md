@@ -43,16 +43,7 @@ A breaking change indicates API-breaking modifications that require a Major vers
 This repository functions as a multi-package repository containing isolated Unity packages. Adhere strictly to the following Unity-specific context when generating commits:
 
 ### A. Scope Determination
-- The `<scope>` inside the Conventional Commit must match the name of the package folder being modified, stripping out any standard project prefixes like `Janito`.
-- Transform folder names to lowercase dash-separated strings (e.g., if files inside `/JanitoExampleNamePackage` change, the scope MUST be `example-name`).
 - If changes cross multiple packages simultaneously, use `deps` or `multi` as the scope, or split into multiple concise bullet points in the extended description body.
-
-### B. Scope Abbreviations
-When files in a package folder change, use these exact abbreviated scopes to save character space when a folder name matches:
-- `/JanitoEditorExtrasPackage` -> use scope: `editor`
-- `/JanitoAnimationPackage` -> use scope: `animation`
-- `/JanitoPrototypingPackage` -> use scope: `proto`
-- `/JanitoTimersPackage` -> use scope: `timers`
 
 ### C. Meta File Handling
 - Unity `.meta` files are critical. If a `.meta` file is part of the staging area, do not ignore it. 
