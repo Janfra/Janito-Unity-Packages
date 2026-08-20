@@ -167,10 +167,10 @@ namespace Janito.EditorExtras.Editor
                     break;
                 }
 
-                string fieldName = format.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
+                string infoName = format.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
 
                 // Try to fill in the placeholder with the actual field value if found, otherwise treat it as a literal
-                FieldInfo field = type.GetField(fieldName, k_searchBindingFlags);
+                FieldInfo field = type.GetField(infoName, k_searchBindingFlags);
                 object value = null;
                 if (field != null)
                 {
@@ -179,7 +179,7 @@ namespace Janito.EditorExtras.Editor
                 }
                 else
                 {
-                    PropertyInfo property = type.GetProperty(fieldName, k_searchBindingFlags);
+                    PropertyInfo property = type.GetProperty(infoName, k_searchBindingFlags);
                     if (property != null && property.CanRead)
                     {
                         value = property.GetValue(typeInstance);
