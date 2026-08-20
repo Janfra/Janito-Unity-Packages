@@ -40,7 +40,6 @@ jobs:
           token: ${{ secrets.PUBLISH_TOKEN || secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
-          create-release: "false"
 
       - name: Print release-please outputs (debug)
         run: |
