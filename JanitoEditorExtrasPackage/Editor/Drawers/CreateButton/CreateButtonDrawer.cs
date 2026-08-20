@@ -123,7 +123,7 @@ namespace Janito.EditorExtras.Editor
 
             if (shouldCreateFolder)
             {
-                PathLibrary.CreateFolderInProject(folderPath);
+                PathLibrary.CreateFoldersInProject(folderPath);
             }
         }
 

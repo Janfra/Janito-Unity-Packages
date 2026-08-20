@@ -91,7 +91,12 @@ namespace Janito.EditorExtras.Editor
             }
         }
 
-        public static void CreateFolderInProject(string relativePath)
+        /// <summary>
+        /// Creates any missing folders from the provided <c>relativePath</c> in the project.
+        /// </summary>
+        /// <param name="relativePath">Folders path to be created</param>
+        /// <exception cref="ArgumentException"><c>relativePath</c> does not start with 'Assets' as the root folder</exception>
+        public static void CreateFoldersInProject(string relativePath)
         {
             if (!relativePath.StartsWith(k_EditorProjectAssetsRoot))
             {
