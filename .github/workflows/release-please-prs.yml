@@ -1,0 +1,51 @@
+name: Release Please - Changelogs (PR mode)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-please-changelogs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-please:
+    name: Generate package release PRs
+    runs-on: ubuntu-latest
+    outputs:
+      editor--tag_name: ${{ steps.release.outputs.editor--tag_name }}
+      editor--release_created: ${{ steps.release.outputs.editor--release_created }}
+      animation--tag_name: ${{ steps.release.outputs.animation--tag_name }}
+      animation--release_created: ${{ steps.release.outputs.animation--release_created }}
+      proto--tag_name: ${{ steps.release.outputs.proto--tag_name }}
+      proto--release_created: ${{ steps.release.outputs.proto--release_created }}
+      timers--tag_name: ${{ steps.release.outputs.timers--tag_name }}
+      timers--release_created: ${{ steps.release.outputs.timers--release_created }}
+    steps:
+      - name: Checkout repository 
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run release-please to create release PRs
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.PUBLISH_TOKEN || secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Print release-please outputs (debug)
+        run: |
+          echo "release-please outputs:"
+          echo "${{ toJson(steps.release.outputs) }}"
+
+      - name: Summary
+        run: |
+          echo "If release PRs were created, review them in the repository's Pull Requests UI."

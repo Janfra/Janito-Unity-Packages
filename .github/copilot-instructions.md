@@ -27,7 +27,19 @@ Only use the following structural types in the title:
 - `test`: Adding or modifying automated unit test passes.
 - `chore`: Maintenance tasks, assembly definitions, or package manifest updates.
 
-## 3. Unity Multi-Package Repository Rules
+## 3. Breaking Changes and Major Version Bumps
+A breaking change indicates API-breaking modifications that require a Major version bump. You must strictly signal breaking changes using these two conventions:
+
+### A. Title Line Signalling (The Exclamation Rule)
+- Append an exclamation mark (`!`) directly between the scope closing parenthesis and the colon divider (e.g., `feat(editor)!: drop support for legacy IMGUI systems`).
+- **Length Constraint**: The title line—including the exclamation mark—must still strictly abide by the **50-character limit**. Keep the description phrasing exceptionally concise if a breaking change is detected.
+
+### B. Body Footer Signalling (The Footnote Rule)
+- If a breaking change occurs, the extended description body MUST terminate with a dedicated footer block starting exactly with the uppercase token `BREAKING CHANGE:`.
+- Follow the token with a space and a clear description explaining what was broken, what structural paths changed, and how developers should migrate their code (e.g., `BREAKING CHANGE: The TypeLibrary.GetFieldType method has been completely removed in favour of TypeLibrary.GetCoreType.`).
+- Encase any referenced class, method, or file names within this footer inside backticks.
+
+## 4. Unity Multi-Package Repository Rules
 This repository functions as a multi-package repository containing isolated Unity packages. Adhere strictly to the following Unity-specific context when generating commits:
 
 ### A. Scope Determination
@@ -54,11 +66,11 @@ When files in a package folder change, use these exact abbreviated scopes to sav
 - Updates to a package's `package.json` must use the `chore` or `release` type.
 - Always try to state the version shift if visible in the diff (e.g., `chore(editor): bump package version to 2.1.0`).
 
-## 4. Body Content Requirements
+## 5. Body Content Requirements
 - Separate the title line from the body block using exactly one blank line.
 - The body must provide a clear explanation of *why* the change was made and *what* it achieves structurally.
 - Detail individual file or utility modifications using a clean, punchy bulleted list.
 - **Spelling Style**: Always write descriptions using **UK English spelling conventions** (e.g., utilise "sanitisation", "initialise", "behaviour", and "dialogue").
 
-## 5. Code Style Language
+## 6. Code Style Language
 - For changes within C# scripts, align the description verbs with Unity-centric operations where applicable (e.g., "implement awake cycle", "optimise update loop", "expose serialized field").
