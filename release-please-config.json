@@ -8,7 +8,7 @@
       "path": "JanitoEditorExtrasPackage",
       "release-type": "simple",
       "version-file": "package.json",
-      "last-release-sha": "00801b3fe0409f13ed88c0a503338a11e577c281"
+      "last-release-sha": "ce540ccdab32cc6cc87647134d16bcbd98b42531"
     },
     "animation": {
       "path": "JanitoAnimationPackage",
