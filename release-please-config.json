@@ -7,26 +7,22 @@
     "editor": {
       "path": "JanitoEditorExtrasPackage",
       "release-type": "simple",
-      "version-file": "package.json",
-      "last-release-sha": "ce540ccdab32cc6cc87647134d16bcbd98b42531"
+      "version-file": "package.json"
     },
     "animation": {
       "path": "JanitoAnimationPackage",
       "release-type": "simple",
-      "version-file": "package.json",
-      "last-release-sha": "3b9b222635760ec52fdf7d006fa02c89c8aaf19b"
+      "version-file": "package.json"
     },
     "proto": {
       "path": "JanitoPrototypingPackage",
       "release-type": "simple",
-      "version-file": "package.json",
-      "last-release-sha": "a0ab782b1f6fac3f7054549159b83b6dc3d6263d"
+      "version-file": "package.json"
     },
     "timers": {
       "path": "JanitoTimersPackage",
       "release-type": "simple",
-      "version-file": "package.json",
-      "last-release-sha": "3b9b222635760ec52fdf7d006fa02c89c8aaf19b"
+      "version-file": "package.json"
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
