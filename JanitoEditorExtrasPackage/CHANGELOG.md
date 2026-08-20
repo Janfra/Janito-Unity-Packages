@@ -1,6 +1,15 @@
 # Changelog
 
 ## [Unreleased] - 2026-08-04
+### Added
+- **Core Type Retrieval**: Added the `GetCoreType(...)` utility extension method to `TypeLibrary` to extract underlying type information, accounting for arrays and standard generic collection wrappers.
+- **Type-Informed String Formatting**: Added the `FormatWithReflectionValues(...)` extension methods to both `string` and `Type` within `TypeLibrary` to handle single-pass `StringBuilder` token parsing, replacing matching member names with dynamic values extracted from fields or properties via reflection.
+- **Project Folders Creation**: Added the `CreateFoldersInProject(...)` utility method to `PathLibrary` to recursively create any missing folders along a specified project-relative path.
+- **Create Button Attribute**: Added `[CreateButton]` to draw an inline inspector button next to `ScriptableObject` references, allowing developers to instantiate and assign asset instances instantly.
+    - Supports dynamic string-format parsing (`NamingFormat`) using `TypeLibrary.FormatWithReflectionValues`, executing custom file-system sanitisation on top of the output string to ensure operating system compatibility.
+    - Supports an optional custom save path (`SavePath`) to initialise the file panel at a designated folder location.
+    - Implements an interactive confirmation dialogue if the custom save path is missing from the project, prompting the developer before automatically generating the folders.
+
 ### Changed
 - **Improve Default Button Label**: Changed default button label to format the method name to insert spaces before capital letters and remove optional `m_`, `_` or `k` followed by uppercase letter in front of the name. 
     - *Note: For more information see `ObjectNames.NicifyVariableName` in Unity documentation.*
