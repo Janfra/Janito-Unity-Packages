@@ -141,7 +141,7 @@ namespace Janito.EditorExtras.Editor
 
         private string FormatPathWithObjectTypeInfo(string format, Object typeInstance)
         {
-            var formattedName = format.FormatWithTypeInfo(typeInstance, k_DefaultNullValueFallbackName);
+            var formattedName = format.FormatWithReflectionValues(typeInstance, k_DefaultNullValueFallbackName);
 
             // Sanitise path
             char[] invalidChars = System.IO.Path.GetInvalidFileNameChars();
