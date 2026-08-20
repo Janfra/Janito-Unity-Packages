@@ -5,9 +5,11 @@ namespace Janito.EditorExtras.EventChannel
 {
     public class VoidEventChannelListener : MonoBehaviour
     {
+        [CreateButton]
         [SerializeField]
         private VoidEventChannelSO m_Channel = default;
 
+        [Space]
         public UnityEvent OnEventRaised;
 
         private void OnEnable()
