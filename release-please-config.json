@@ -1,26 +1,30 @@
 {
+  "bootstrap-sha": "ce540ccdab32cc6cc87647134d16bcbd98b42531",
+  "last-release-sha": "ce540ccdab32cc6cc87647134d16bcbd98b42531",
+  "release-type": "simple",
+  "force-tag-creation": true,
   "include-component-in-tag": true,
   "include-v-in-tag": true,
   "tag-separator": "@",
   "separate-pull-requests": true,
   "packages": {
-    "editor": {
-      "path": "JanitoEditorExtrasPackage",
+    "JanitoEditorExtrasPackage": {
+      "package-name": "editor",
       "release-type": "simple",
       "version-file": "package.json"
     },
-    "animation": {
-      "path": "JanitoAnimationPackage",
+    "JanitoAnimationPackage": {
+      "package-name": "animation",
       "release-type": "simple",
       "version-file": "package.json"
     },
-    "proto": {
-      "path": "JanitoPrototypingPackage",
+    "JanitoPrototypingPackage": {
+      "package-name": "proto",
       "release-type": "simple",
       "version-file": "package.json"
     },
-    "timers": {
-      "path": "JanitoTimersPackage",
+    "JanitoTimersPackage": {
+      "package-name": "timers",
       "release-type": "simple",
       "version-file": "package.json"
     }
