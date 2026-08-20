@@ -19,14 +19,14 @@ jobs:
     name: Generate package release PRs
     runs-on: ubuntu-latest
     outputs:
-      editor--tag_name: ${{ steps.release.outputs.editor--tag_name }}
-      editor--release_created: ${{ steps.release.outputs.editor--release_created }}
-      animation--tag_name: ${{ steps.release.outputs.animation--tag_name }}
-      animation--release_created: ${{ steps.release.outputs.animation--release_created }}
-      proto--tag_name: ${{ steps.release.outputs.proto--tag_name }}
-      proto--release_created: ${{ steps.release.outputs.proto--release_created }}
-      timers--tag_name: ${{ steps.release.outputs.timers--tag_name }}
-      timers--release_created: ${{ steps.release.outputs.timers--release_created }}
+      editor--tag_name: ${{ steps.release.outputs.JanitoEditorExtrasPackage--tag_name }}
+      editor--release_created: ${{ steps.release.outputs.JanitoEditorExtrasPackage--release_created }}
+      animation--tag_name: ${{ steps.release.outputs.JanitoAnimationPackage--tag_name }}
+      animation--release_created: ${{ steps.release.outputs.JanitoAnimationPackage--release_created }}
+      proto--tag_name: ${{ steps.release.outputs.JanitoPrototypingPackage--tag_name }}
+      proto--release_created: ${{ steps.release.outputs.JanitoPrototypingPackage--release_created }}
+      timers--tag_name: ${{ steps.release.outputs.JanitoTimersPackage--tag_name }}
+      timers--release_created: ${{ steps.release.outputs.JanitoTimersPackage--release_created }}
     steps:
       - name: Checkout repository 
         uses: actions/checkout@v4
