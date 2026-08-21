@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/Janfra/Janito-Unity-Packages/compare/editor@v1.1.0...editor@v1.2.0) (2026-08-21)
+
+
+### Features
+
+* **editor:** Add child-type and field-type helpers ([ec906af](https://github.com/Janfra/Janito-Unity-Packages/commit/ec906af9840968bab20808bb489076e9c18908a1))
+* **editor:** add create button attribute ([#2](https://github.com/Janfra/Janito-Unity-Packages/issues/2)) ([3767792](https://github.com/Janfra/Janito-Unity-Packages/commit/3767792daeee4f6e29ab7c10f5ae34c8fc5439e5))
+* **editor:** testing changelog ([8bf2808](https://github.com/Janfra/Janito-Unity-Packages/commit/8bf28083fcea7b1db45fa9d17791c44e41a6dbdd))
+
+
+### Bug Fixes
+
+* remove test dummy ([d7810e9](https://github.com/Janfra/Janito-Unity-Packages/commit/d7810e9c7fbf9a15a029b1703e99f0786fb42298))
+
 ## [Unreleased] - 2026-08-04
 ### Added
 - **Core Type Retrieval**: Added the `GetCoreType(...)` utility extension method to `TypeLibrary` to extract underlying type information, accounting for arrays and standard generic collection wrappers.
