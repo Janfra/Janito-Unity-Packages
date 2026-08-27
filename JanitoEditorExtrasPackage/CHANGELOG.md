@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Janfra/Janito-Unity-Packages/compare/editor@v1.2.0...editor@v1.2.1) (2026-08-27)
+
+
+### Bug Fixes
+
+* nested asset folder creation ([#7](https://github.com/Janfra/Janito-Unity-Packages/issues/7)) ([bfc08ee](https://github.com/Janfra/Janito-Unity-Packages/commit/bfc08eeb7221bd955688d4febcf909620c6bec58))
+
 ## [1.2.0](https://github.com/Janfra/Janito-Unity-Packages/compare/editor@v1.1.0...editor@v1.2.0) (2026-08-21)
 
 
