@@ -105,6 +105,8 @@ namespace Janito.EditorExtras.Editor
 
             string[] folders = relativePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             string parentFolder = k_EditorProjectAssetsRoot; // We assume it is at the root already as required and skip the first folder
+            string currentFolder = string.Empty;
+
             for (int i = 1; i < folders.Length; i++)
             {
                 string folder = folders[i];
@@ -113,11 +115,12 @@ namespace Janito.EditorExtras.Editor
                     continue;
                 }
 
-                string currentFolder = Path.Combine(parentFolder, folder);
+                currentFolder = Path.Combine(parentFolder, folder);
                 if (!AssetDatabase.IsValidFolder(currentFolder))
                 {
                     AssetDatabase.CreateFolder(parentFolder, folder);
                 }
+                parentFolder = currentFolder;
             }
         }
     }
